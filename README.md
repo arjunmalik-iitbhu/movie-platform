@@ -13,8 +13,8 @@ docker build .
 docker run movie-api
 
 cd ${ROOT_FOLDER}/postgres
-docker build .
-docker run postgre
+docker build --build-arg MOVIE_POSTGRES_PASSWORD=${MOVIE_POSTGRES_PASSWORD} -t movie-postgres .
+docker run movie-postgre
 
 ```
 
