@@ -5,11 +5,11 @@
 ROOT_FOLDER=`pwd`
 
 cd ${ROOT_FOLDER}/movie-ui
-docker build .
+docker build -t movie-ui .
 docker run movie-ui
 
 cd ${ROOT_FOLDER}/movie-api
-docker build .
+docker build -t movie-api .
 docker run movie-api
 
 cd ${ROOT_FOLDER}/postgres
