@@ -1,0 +1,6 @@
+fastapi==0.128.0
+uvicorn
+sqlmodel==0.0.31
+python-dotenv==1.2.1
+pydantic-settings
+pre-commit==4.5.1
