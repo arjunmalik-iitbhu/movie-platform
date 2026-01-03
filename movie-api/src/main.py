@@ -1,5 +1,4 @@
 from fastapi import Depends, FastAPI
-from .internal import admin
 from . import api
 
 app = FastAPI()
