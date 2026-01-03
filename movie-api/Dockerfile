@@ -5,4 +5,4 @@ COPY . .
 RUN pip install -r requirements.txt
 RUN pre-commit run --all-files
 
-CMD ["fastapi", "run", "src/main.py"]
+CMD ["fastapi", "run", "--workers", "2", "src/main.py"]

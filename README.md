@@ -44,8 +44,20 @@ erDiagram
     }
     movie {
         bigserial id
-        varchar name
+        varchar title
+        int release_year
         bigint director_id
+        timestampz created_at
+        timestampz updated_at
+    }
+    movie_rating ||--|{ movie : has
+    movie_rating {
+        bigserial id
+        bigint movie_id
+        text comment
+        int story
+        int direction
+        int acting
         timestampz created_at
         timestampz updated_at
     }
