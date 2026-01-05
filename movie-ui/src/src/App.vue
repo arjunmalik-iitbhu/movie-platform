@@ -5,7 +5,6 @@ import Movie from './components/icons/Movie.vue'
 import Genre from './components/icons/Genre.vue'
 import Actor from './components/icons/Actor.vue'
 import Director from './components/icons/Director.vue'
-
 </script>
 
 <template>

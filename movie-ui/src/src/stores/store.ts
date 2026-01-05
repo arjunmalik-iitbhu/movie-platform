@@ -1,4 +1,3 @@
-import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import { config } from '../config'
 
@@ -12,7 +11,7 @@ interface Data {
 }
 
 interface Setting {
-  navBarVisible: Boolean
+  navBarVisible: boolean
 }
 
 interface Info {
@@ -24,7 +23,7 @@ export const useInfoStore = defineStore('info', {
   state: (): Info => {
     return {
       setting: {
-        navBarVisible: true
+        navBarVisible: true,
       },
       data: {
         movieList: [],
@@ -34,14 +33,14 @@ export const useInfoStore = defineStore('info', {
   actions: {
     async fetchMovies() {
       const resp = await fetch(`${config.API_BASE_URL}/movies`, {
-        method: "GET",
+        method: 'GET',
         headers: {},
-      });
+      })
       if (!resp.ok) {
         throw new Error(`Error in fetchMovies. Response status: ${resp.status}`)
       }
-      const movies: Movie[] = await resp.json();
-      this.data.movieList = movies;
+      const movies: Movie[] = await resp.json()
+      this.data.movieList = movies
     },
   },
 })

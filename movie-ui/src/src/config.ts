@@ -1,7 +1,7 @@
 interface Config {
-    API_BASE_URL: string
+  API_BASE_URL: string
 }
 
 export const config: Config = {
-    API_BASE_URL: import.meta.env.VITE_API_BASE_URL
+  API_BASE_URL: import.meta.env.VITE_API_BASE_URL,
 }
