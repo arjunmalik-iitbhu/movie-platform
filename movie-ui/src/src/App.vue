@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { RouterLink, RouterView, useRoute } from 'vue-router'
 import Menu from './components/icons/Menu.vue'
+import Movie from './components/icons/Movie.vue'
+import Genre from './components/icons/Genre.vue'
+import Actor from './components/icons/Actor.vue'
+import Director from './components/icons/Director.vue'
 
 </script>
 
@@ -17,7 +21,7 @@ import Menu from './components/icons/Menu.vue'
               class="nav-icon"
               :class="useRoute().path === '/movies' ? 'selected' : 'unselected'"
             >
-              <Menu />
+              <Movie />
             </div>
             <RouterLink to="/movies">Movies</RouterLink>
           </div>
@@ -26,7 +30,7 @@ import Menu from './components/icons/Menu.vue'
               class="nav-icon"
               :class="useRoute().path === '/genres' ? 'selected' : 'unselected'"
             >
-              <Menu />
+              <Genre />
             </div>
             <RouterLink to="/genres">Genres</RouterLink>
           </div>
@@ -35,7 +39,7 @@ import Menu from './components/icons/Menu.vue'
               class="nav-icon"
               :class="useRoute().path === '/actors' ? 'selected' : 'unselected'"
             >
-              <Menu />
+              <Actor />
             </div>
             <RouterLink to="/actors">Actors</RouterLink>
           </div>
@@ -44,7 +48,7 @@ import Menu from './components/icons/Menu.vue'
               class="nav-icon"
               :class="useRoute().path === '/directors' ? 'isSelected' : 'isUnselected'"
             >
-              <Menu />
+              <Director />
             </div>
             <RouterLink to="/directors">Directors</RouterLink>
           </div>
