@@ -1,24 +1,29 @@
 <script setup lang="ts">
 import { RouterLink, RouterView, useRoute } from 'vue-router'
-import Menu from './components/icons/IconMenu.vue'
-import Movie from './components/icons/IconMovie.vue'
-import Genre from './components/icons/IconGenre.vue'
-import Actor from './components/icons/IconActor.vue'
-import Director from './components/icons/IconDirector.vue'
+import Menu from '@/components/icons/IconMenu.vue'
+import Movie from '@/components/icons/IconMovie.vue'
+import Genre from '@/components/icons/IconGenre.vue'
+import Actor from '@/components/icons/IconActor.vue'
+import Director from '@/components/icons/IconDirector.vue'
+import { useInfoStore } from '@/stores/store'
+
+const store = useInfoStore();
+const route = useRoute();
+
 </script>
 
 <template>
   <div class="main">
-    <div class="navigate">
+    <div class="navigate" v-if="store.settings.navBarVisible">
       <nav>
         <div class="navigate-items">
-          <button class="nav-toggle">
+          <button class="nav-toggle" v-on:click="store.toggleNavBar()">
             <Menu />
           </button>
           <div class="nav-item">
             <div
               class="nav-icon"
-              :class="useRoute().path === '/movies' ? 'selected' : 'unselected'"
+              :class="route.path === '/movies' ? 'selected' : 'unselected'"
             >
               <Movie />
             </div>
@@ -27,7 +32,7 @@ import Director from './components/icons/IconDirector.vue'
           <div class="nav-item">
             <div
               class="nav-icon"
-              :class="useRoute().path === '/genres' ? 'selected' : 'unselected'"
+              :class="route.path === '/genres' ? 'selected' : 'unselected'"
             >
               <Genre />
             </div>
@@ -36,7 +41,7 @@ import Director from './components/icons/IconDirector.vue'
           <div class="nav-item">
             <div
               class="nav-icon"
-              :class="useRoute().path === '/actors' ? 'selected' : 'unselected'"
+              :class="route.path === '/actors' ? 'selected' : 'unselected'"
             >
               <Actor />
             </div>
@@ -45,7 +50,7 @@ import Director from './components/icons/IconDirector.vue'
           <div class="nav-item">
             <div
               class="nav-icon"
-              :class="useRoute().path === '/directors' ? 'selected' : 'unselected'"
+              :class="route.path === '/directors' ? 'selected' : 'unselected'"
             >
               <Director />
             </div>

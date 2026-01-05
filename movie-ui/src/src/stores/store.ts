@@ -7,7 +7,7 @@ interface Movie {
 }
 
 interface Data {
-  movieList: Movie[]
+  movies: Movie[]
 }
 
 interface Setting {
@@ -15,18 +15,18 @@ interface Setting {
 }
 
 interface Info {
-  setting: Setting
+  settings: Setting
   data: Data
 }
 
 export const useInfoStore = defineStore('info', {
   state: (): Info => {
     return {
-      setting: {
+      settings: {
         navBarVisible: true,
       },
       data: {
-        movieList: [],
+        movies: [],
       },
     }
   },
@@ -40,7 +40,10 @@ export const useInfoStore = defineStore('info', {
         throw new Error(`Error in fetchMovies. Response status: ${resp.status}`)
       }
       const movies: Movie[] = await resp.json()
-      this.data.movieList = movies
+      this.data.movies = movies
     },
+    toggleNavBar() {
+      this.settings.navBarVisible = !this.settings.navBarVisible;
+    }
   },
 })
