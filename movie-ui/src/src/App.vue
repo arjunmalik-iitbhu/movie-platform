@@ -45,7 +45,7 @@ import Director from './components/icons/IconDirector.vue'
           <div class="nav-item">
             <div
               class="nav-icon"
-              :class="useRoute().path === '/directors' ? 'isSelected' : 'isUnselected'"
+              :class="useRoute().path === '/directors' ? 'selected' : 'unselected'"
             >
               <Director />
             </div>
