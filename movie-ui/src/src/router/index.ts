@@ -7,7 +7,8 @@ const router = createRouter({
     {
       path: '/movies',
       name: 'movies',
-      component: HomeView,
+      // component: HomeView,
+      component: import('../views/AboutView.vue'),
       alias: '/'
     },
     {

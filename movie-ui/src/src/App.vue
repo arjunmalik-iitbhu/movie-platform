@@ -17,16 +17,21 @@ import Menu from './components/icons/Menu.vue'
         </div>
       </nav>
     </div>
-    <RouterView />
+    <div class="view">
+      <RouterView />
+    </div>
   </div>
 </template>
 
 <style scoped>
 .main {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  width: 100vw;
   .navigate {
-    position: fixed;
-    left: 0;
-    height: 100%;
+    display: flex;
+    place-items: flex-start;
     padding: 2rem;
     .navigate-items {
       display: flex;
@@ -34,6 +39,13 @@ import Menu from './components/icons/Menu.vue'
       flex-direction: column;
       gap: 2rem;
     }
+  }
+  .view {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    align-items: center;
+    justify-content: space-evenly;
   }
 }
 </style>
