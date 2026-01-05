@@ -91,6 +91,9 @@ import Director from './components/icons/IconDirector.vue'
         place-items: center;
         gap: 0.5rem;
         border-radius: 0.5rem;
+        a {
+          color: var(--color-text);
+        }
         .nav-icon {
           padding-left: 1rem;
           padding-right: 1rem;
@@ -104,7 +107,7 @@ import Director from './components/icons/IconDirector.vue'
         cursor: pointer;
       }
       .nav-item:hover {
-        color: --color-text;
+        color: var(--color-primary);
         a:hover {
           background-color: var(--color-primary);
           cursor: pointer;
