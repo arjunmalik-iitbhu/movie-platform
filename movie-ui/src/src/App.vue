@@ -32,12 +32,14 @@ import Menu from './components/icons/Menu.vue'
   .navigate {
     display: flex;
     place-items: flex-start;
-    padding: 2rem;
+    padding-top: 5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
     .navigate-items {
       display: flex;
       place-items: center;
       flex-direction: column;
-      gap: 2rem;
+      gap: 5rem;
     }
   }
   .view {
