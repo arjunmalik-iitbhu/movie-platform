@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { RouterLink, RouterView, useRoute } from 'vue-router'
-import Menu from './components/icons/Menu.vue'
-import Movie from './components/icons/Movie.vue'
-import Genre from './components/icons/Genre.vue'
-import Actor from './components/icons/Actor.vue'
-import Director from './components/icons/Director.vue'
+import Menu from './components/icons/IconMenu.vue'
+import Movie from './components/icons/IconMovie.vue'
+import Genre from './components/icons/IconGenre.vue'
+import Actor from './components/icons/IconActor.vue'
+import Director from './components/icons/IconDirector.vue'
 </script>
 
 <template>
