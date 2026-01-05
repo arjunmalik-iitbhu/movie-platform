@@ -9,7 +9,7 @@ import Menu from './components/icons/Menu.vue'
     <div class="navigate">
       <nav>
         <div class="navigate-items">
-          <button>
+          <button class="nav-toggle">
             <Menu />
           </button>
           <div class="nav-item">
@@ -54,11 +54,19 @@ import Menu from './components/icons/Menu.vue'
       place-items: center;
       flex-direction: column;
       gap: 2.5rem;
+      .nav-toggle {
+        background-color: var(--color-white-soft);
+        border: none;
+      }
       .nav-item {
         display: flex;
         flex-direction: column;
         place-items: center;
         gap: 0.5rem;
+        border-radius: 0.5rem;
+      }
+      .nav-toggle:hover {
+        cursor: pointer;
       }
       .nav-item:hover {
         background-color: var(--color-primary);
