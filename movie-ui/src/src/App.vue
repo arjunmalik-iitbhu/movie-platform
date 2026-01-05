@@ -53,12 +53,19 @@ import Menu from './components/icons/Menu.vue'
       display: flex;
       place-items: center;
       flex-direction: column;
-      gap: 5rem;
+      gap: 2.5rem;
       .nav-item {
         display: flex;
         flex-direction: column;
         place-items: center;
         gap: 0.5rem;
+      }
+      .nav-item:hover {
+        background-color: var(--color-primary);
+        cursor: pointer;
+        a:hover {
+          background-color: initial;
+        }
       }
     }
   }
