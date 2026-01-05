@@ -1,16 +1,23 @@
 <script setup lang="ts">
+import Actions from '../components/Actions.vue'
 import TheWelcome from '../components/TheWelcome.vue'
 </script>
 
 <template>
-  <main>
+  <main class="movies">
+    <Actions class="movie-actions"/>
     <TheWelcome />
   </main>
 </template>
 
 <style>
-.about {
+.movies {
   display: flex;
+  flex-direction: column;
+  flex: 1;
+  .movie-actions {
+    display: flex;
+    justify-content: flex-end;
+  }
 }
 </style>
-

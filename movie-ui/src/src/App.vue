@@ -18,7 +18,9 @@ const route = useRoute();
       <nav>
         <div class="navigate-items">
           <button class="nav-toggle" v-on:click="store.toggleNavBar()">
-            <Menu />
+            <div class="toggle-icon">
+              <Menu />
+            </div>
           </button>
           <div class="nav-item">
             <div
@@ -27,7 +29,7 @@ const route = useRoute();
             >
               <Movie />
             </div>
-            <RouterLink to="/movies">Movies</RouterLink>
+            <RouterLink class="link" to="/movies">Movies</RouterLink>
           </div>
           <div class="nav-item">
             <div
@@ -36,7 +38,7 @@ const route = useRoute();
             >
               <Genre />
             </div>
-            <RouterLink to="/genres">Genres</RouterLink>
+            <RouterLink class="link" to="/genres">Genres</RouterLink>
           </div>
           <div class="nav-item">
             <div
@@ -45,7 +47,7 @@ const route = useRoute();
             >
               <Actor />
             </div>
-            <RouterLink to="/actors">Actors</RouterLink>
+            <RouterLink class="link" to="/actors">Actors</RouterLink>
           </div>
           <div class="nav-item">
             <div
@@ -54,7 +56,7 @@ const route = useRoute();
             >
               <Director />
             </div>
-            <RouterLink to="/directors">Directors</RouterLink>
+            <RouterLink class="link" to="/directors">Directors</RouterLink>
           </div>
         </div>
       </nav>
@@ -107,9 +109,18 @@ const route = useRoute();
         .selected {
           background-color: var(--color-primary);
         }
+        .link {
+          border-radius: 0.3rem;
+        }
       }
-      .nav-toggle:hover {
+      .toggle-icon {
+        padding-left: 1rem;
+        padding-right: 1rem;
+        border-radius: 1.5rem;
+      }
+      .toggle-icon:hover {
         cursor: pointer;
+        background-color: var(--color-primary);
       }
       .nav-item:hover {
         color: var(--color-primary);
@@ -124,10 +135,10 @@ const route = useRoute();
     display: flex;
     flex-direction: row;
     flex: 1;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-evenly;
     overflow: auto;
-    padding: 5rem;
+    padding: 2rem;
   }
 }
 </style>
