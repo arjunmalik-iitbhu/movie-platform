@@ -9,11 +9,25 @@ import Menu from './components/icons/Menu.vue'
     <div class="navigate">
       <nav>
         <div class="navigate-items">
-          <Menu />
-          <RouterLink to="/movies">Movies</RouterLink>
-          <RouterLink to="/genres">Genres</RouterLink>
-          <RouterLink to="/actors">Actors</RouterLink>
-          <RouterLink to="/directors">Directors</RouterLink>
+          <button>
+            <Menu />
+          </button>
+          <div class="nav-item">
+            <Menu />
+            <RouterLink to="/movies">Movies</RouterLink>
+          </div>
+          <div class="nav-item">
+            <Menu />
+            <RouterLink to="/genres">Genres</RouterLink>
+          </div>
+          <div class="nav-item">
+            <Menu />
+            <RouterLink to="/actors">Actors</RouterLink>
+          </div>
+          <div class="nav-item">
+            <Menu />
+            <RouterLink to="/directors">Directors</RouterLink>
+          </div>
         </div>
       </nav>
     </div>
@@ -40,6 +54,12 @@ import Menu from './components/icons/Menu.vue'
       place-items: center;
       flex-direction: column;
       gap: 5rem;
+      .nav-item {
+        display: flex;
+        flex-direction: column;
+        place-items: center;
+        gap: 0.5rem;
+      }
     }
   }
   .view {
