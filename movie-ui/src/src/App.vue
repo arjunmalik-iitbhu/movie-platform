@@ -10,8 +10,10 @@ import Menu from './components/icons/Menu.vue'
       <nav>
         <div class="navigate-items">
           <Menu />
-          <RouterLink to="/">Home</RouterLink>
-          <RouterLink to="/about">About</RouterLink>
+          <RouterLink to="/movies">Movies</RouterLink>
+          <RouterLink to="/genres">Genres</RouterLink>
+          <RouterLink to="/actors">Actors</RouterLink>
+          <RouterLink to="/directors">Directors</RouterLink>
         </div>
       </nav>
     </div>
