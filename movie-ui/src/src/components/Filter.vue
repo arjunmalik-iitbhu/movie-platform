@@ -1,13 +1,78 @@
 <script setup lang="ts">
-import WelcomeItem from './WelcomeItem.vue'
-import DocumentationIcon from './icons/IconDocumentation.vue'
-import ToolingIcon from './icons/IconTooling.vue'
-import EcosystemIcon from './icons/IconEcosystem.vue'
-import CommunityIcon from './icons/IconCommunity.vue'
-import SupportIcon from './icons/IconSupport.vue'
+import { ref, computed } from 'vue'
+import SearchIcon from '@/components/icons/IconSearch.vue'
+import { ENTITIES } from '@/constants'
+import type { ENTITY_TYPE } from '@/constants'
+import { toTitleCase } from '@/utilities'
+import { useInfoStore } from '@/stores/store'
+
+const filterType = ref<ENTITY_TYPE>(ENTITIES[0]);
+const filterValue = ref<string>("");
+const store = useInfoStore();
+
+const props = defineProps<{
+  entity: ENTITY_TYPE
+}>();
+
+const filteredEntities = computed(() => ENTITIES.filter(e => e === filterType.value));
 
 </script>
 
 <template>
-  <div class="filter"></div>
+  <div class="filter">
+    <div class="search">
+      <select name="entities" v-model="filterType">
+        <option v-for="entity in ENTITIES" :value="entity" :key="entity">
+          {{ toTitleCase(entity) }}
+        </option>
+      </select>
+      <input :placeholder="`Search by ${filterType}`" v-model="filterValue">
+      <button v-on:click="store.fetch(
+        entity,
+        {
+          offset: store.data[`${entity}smeta`].offset,
+          limit: store.data[`${entity}smeta`].limit,
+          filters: filteredEntities.map(e => ({entity: filterType, value: filterValue}))
+        }
+      )">
+        <SearchIcon />
+      </button>
+    </div>
+    <div class="selected">
+      <p v-for="entity in filteredEntities">
+        {{ `${toTitleCase(entity)}: ${filterValue}` }}
+      </p>
+    </div>
+  </div>
 </template>
+
+<style>
+.filter {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-around;
+  button {
+    background-color: var(--color-white-soft);
+    border: none;
+    border-radius: 0.5rem;
+  }
+  button:hover {
+    cursor: pointer;
+    background-color: var(--color-hover);
+  }
+  .search {
+    display: flex;
+    flex-direction: row;
+    background-color: var(--color-primary);
+  }
+  .selected {
+    display: flex;
+    flex-direction: row;
+    p {
+      border: 1px solid var(--color-border);
+      padding: 1rem;
+    }
+  }
+}
+</style>
