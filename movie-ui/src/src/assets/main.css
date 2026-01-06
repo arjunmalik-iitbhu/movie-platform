@@ -20,6 +20,7 @@
   --color-text-dark-2: rgba(235, 235, 235, 0.64);
 
   --color-primary: hsla(280, 41%, 41%, 0.455);
+  --color-secondary: hsla(280, 20%, 76%, 0.455);
 }
 
 :root {
@@ -32,6 +33,7 @@
 
   --color-heading: var(--color-text-light-1);
   --color-text: var(--color-text-light-1);
+  --color-hover: var(--color-secondary);
 
   --section-gap: 160px;
 }

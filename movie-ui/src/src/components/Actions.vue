@@ -46,7 +46,7 @@ const toggleMoreActions = () => {
   }
   button:hover {
     cursor: pointer;
-    background-color: var(--color-primary);
+    background-color: var(--color-hover);
   }
   .more-actions-menu {
     position: fixed;
@@ -56,10 +56,12 @@ const toggleMoreActions = () => {
     flex-direction: column;
     align-items: flex-end;
     justify-content: flex-end;
-    padding: 10rem;
-    border: 1px solid black;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    border: 1px solid var(--color-border);
     border-radius: 1rem;
     z-index: 10;
+    box-shadow: 0 4px 6px var(--color-border-hover);
   }
 }
 </style>

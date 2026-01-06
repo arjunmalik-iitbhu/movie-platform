@@ -120,12 +120,12 @@ const route = useRoute();
       }
       .toggle-icon:hover {
         cursor: pointer;
-        background-color: var(--color-primary);
+        background-color: var(--color-secondary);
       }
       .nav-item:hover {
         color: var(--color-primary);
         a:hover {
-          background-color: var(--color-primary);
+          background-color: var(--color-secondary);
           cursor: pointer;
         }
       }
