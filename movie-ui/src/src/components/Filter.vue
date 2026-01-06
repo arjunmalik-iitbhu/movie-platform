@@ -50,8 +50,8 @@ const filteredEntities = computed(() => ENTITIES.filter(e => e === filterType.va
 .filter {
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
-  justify-content: space-around;
+  padding-bottom: 1rem;
+  gap: 0.5rem;
   .search {
     display: flex;
     flex-direction: row;
@@ -85,7 +85,8 @@ const filteredEntities = computed(() => ENTITIES.filter(e => e === filterType.va
     flex-direction: row;
     p {
       border: 1px solid var(--color-border);
-      padding: 1rem;
+      border-radius: 0.5rem;
+      padding: 0.5rem;
     }
   }
 }
