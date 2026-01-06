@@ -1,7 +1,17 @@
 <script setup lang="ts">
+import { onMounted } from 'vue'
 import Actions from '@/components/Actions.vue'
 import Filter from '@/components/Filter.vue'
-import TheWelcome from '../components/TheWelcome.vue'
+import Item from '@/components/EntityItem.vue'
+import { useInfoStore } from '@/stores/store'
+import { MOVIE, DEFAULT_IMAGE } from '@/constants'
+
+const store = useInfoStore();
+
+onMounted(async () =>{
+  if (!store.data.movies.length) store.fetch(MOVIE)
+});
+
 </script>
 
 <template>
@@ -9,7 +19,11 @@ import TheWelcome from '../components/TheWelcome.vue'
     <Actions class="movie-actions"/>
     <h1 class="movie-title">Movies</h1>
     <Filter entity="movie" class="movie-filter"/>
-    <TheWelcome />
+    <div class="movie-items">
+      <div v-for="movie in store.data.movies">
+        <Item :id="movie.id" :entity="MOVIE" :imagesrc="movie.imagesrc || DEFAULT_IMAGE" :title="movie.title" :subtitle="movie.release_year"/>
+      </div>
+    </div>
   </main>
 </template>
 

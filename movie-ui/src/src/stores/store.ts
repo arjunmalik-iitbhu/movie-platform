@@ -54,13 +54,19 @@ export const useInfoStore = defineStore('info', {
     }
   },
   actions: {
-    async fetch(entity: ENTITY_TYPE, params: {offset: number, limit: number, filters: {entity: ENTITY_TYPE, value: string}[]}) {
+    async fetch(
+      entity: ENTITY_TYPE,
+      params?: {offset: number, limit: number, filters?: {entity: ENTITY_TYPE, value: string}[]}
+    ) {
+      const paramsVal = (
+        params || this.data.moviesmeta
+      ) as {offset: number, limit: number, filters?: {entity: ENTITY_TYPE, value: string}[]}
       const urlBase = `${config.API_BASE_URL}/${entity}s`
       const url = new URL(urlBase)
       const processedparams = {
-        offset: String(params.offset),
-        limit: String(params.limit),
-        ...params.filters.reduce((curr, elem) => Object.assign(curr, {[elem.entity]: elem.value}), {})
+        offset: String(paramsVal.offset),
+        limit: String(paramsVal.limit),
+        ...(paramsVal?.filters?.reduce((curr, elem) => Object.assign(curr, {[elem.entity]: elem.value}), {}) || this.data.moviesmeta)
       }
       url.search = new URLSearchParams(processedparams).toString()
       const resp = await fetch(url, {
@@ -72,7 +78,7 @@ export const useInfoStore = defineStore('info', {
       }
       const entities = await resp.json()
       Object.assign(this.data, {[`${entity}s`]: entities})
-      Object.assign(this.data, {[`${entity}smeta`]: {offset: params.offset, limit: params.offset}})
+      Object.assign(this.data, {[`${entity}smeta`]: {offset: paramsVal.offset, limit: paramsVal.offset}})
     },
     async add(entity: ENTITY_TYPE, data: Movie | Genre | Actor | Director) {
       const resp = await fetch(`${config.API_BASE_URL}/${entity}s`, {
