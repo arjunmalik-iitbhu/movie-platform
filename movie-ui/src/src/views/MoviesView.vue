@@ -6,6 +6,7 @@ import TheWelcome from '../components/TheWelcome.vue'
 <template>
   <main class="movies">
     <Actions class="movie-actions"/>
+    <h1>Movies</h1>
     <TheWelcome />
   </main>
 </template>

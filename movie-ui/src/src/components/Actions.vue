@@ -15,19 +15,21 @@ const toggleMoreActions = () => {
 
 <template>
   <div class="actions">
-    <button class="more-action" v-on:click="toggleMoreActions">
-      <MoreVertIcon />
-    </button>
-  </div>
-  <template v-if="moreActionsVisible">
     <div class="more-actions">
-      <div class="nav-toggle">
-        <button class="nav-toggle-action" v-on:click="store.toggleNavBar()">
-          Toggle Navigation Bar
-        </button>
-      </div>
+      <button class="more-action" v-on:click="toggleMoreActions">
+        <MoreVertIcon />
+      </button>
+      <template v-if="moreActionsVisible">
+        <div class="more-actions-menu">
+          <div class="nav-toggle">
+            <button class="nav-toggle-action" v-on:click="store.toggleNavBar()">
+              Toggle Navigation Bar
+            </button>
+          </div>
+        </div>
+      </template>
     </div>
-  </template>
+  </div>
 </template>
 
 <style>
@@ -40,10 +42,24 @@ const toggleMoreActions = () => {
     background-color: var(--color-white-soft);
     border: none;
     border-radius: 0.5rem;
+    height: 5vh;
   }
   button:hover {
     cursor: pointer;
     background-color: var(--color-primary);
+  }
+  .more-actions-menu {
+    position: fixed;
+    top: auto;
+    right: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-end;
+    padding: 10rem;
+    border: 1px solid black;
+    border-radius: 1rem;
+    z-index: 10;
   }
 }
 </style>
