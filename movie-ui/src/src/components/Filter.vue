@@ -14,7 +14,7 @@ const props = defineProps<{
   entity: ENTITY_TYPE
 }>();
 
-const filteredEntities = computed(() => ENTITIES.filter(e => e === filterType.value));
+const filteredEntities = computed(() => ENTITIES.filter(e => e === filterType.value && filterValue.value));
 
 </script>
 
@@ -52,19 +52,33 @@ const filteredEntities = computed(() => ENTITIES.filter(e => e === filterType.va
   flex-direction: row;
   align-items: flex-start;
   justify-content: space-around;
-  button {
-    background-color: var(--color-white-soft);
-    border: none;
-    border-radius: 0.5rem;
-  }
-  button:hover {
-    cursor: pointer;
-    background-color: var(--color-hover);
-  }
   .search {
     display: flex;
     flex-direction: row;
-    background-color: var(--color-primary);
+    border: none;
+    select {
+      background-color: var(--color-background-primary);
+      border: none;
+      border-radius: 1rem 0 0 1rem;
+    }
+    option {
+      background-color: var(--color-background);
+    }
+    option:hover {
+      background-color: var(--color-hover);
+    }
+    input {
+      background-color: var(--color-background-primary);
+      border: none;
+    }
+    button {
+      background-color: var(--color-background-primary);
+      border: none;
+      border-radius: 0 1rem 1rem 0;
+    }
+    button:hover {
+      cursor: pointer;
+    }
   }
   .selected {
     display: flex;

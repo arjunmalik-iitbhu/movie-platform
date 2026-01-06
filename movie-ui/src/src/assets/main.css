@@ -27,6 +27,8 @@
   --color-background: var(--color-white);
   --color-background-soft: var(--color-white-soft);
   --color-background-mute: var(--color-white-mute);
+  --color-background-primary: var(--color-primary);
+  --color-background-secondary: var(--color-secondary);
 
   --color-border: var(--color-divider-light-2);
   --color-border-hover: var(--color-divider-light-1);
