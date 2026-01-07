@@ -2,9 +2,9 @@ from typing import Optional
 from fastapi import APIRouter, HTTPException, Depends, status
 from sqlmodel.ext.asyncio.session import AsyncSession
 from sqlmodel import select
-from deps import get_session
-from dto import MovieCreate
-from model.entity import Movie
+from src.deps import get_session
+from src.dto import MovieCreate
+from src.model.entity import Movie
 
 router = APIRouter(
     tags=["movies"],
