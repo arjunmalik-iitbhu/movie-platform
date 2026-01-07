@@ -7,9 +7,8 @@ import Actor from '@/components/icons/IconActor.vue'
 import Director from '@/components/icons/IconDirector.vue'
 import { useInfoStore } from '@/stores/store'
 
-const store = useInfoStore();
-const route = useRoute();
-
+const store = useInfoStore()
+const route = useRoute()
 </script>
 
 <template>
@@ -23,37 +22,25 @@ const route = useRoute();
             </div>
           </button>
           <div class="nav-item">
-            <div
-              class="nav-icon"
-              :class="route.path === '/movies' ? 'selected' : 'unselected'"
-            >
+            <div class="nav-icon" :class="route.path === '/movies' ? 'selected' : 'unselected'">
               <Movie />
             </div>
             <RouterLink class="link" to="/movies">Movies</RouterLink>
           </div>
           <div class="nav-item">
-            <div
-              class="nav-icon"
-              :class="route.path === '/genres' ? 'selected' : 'unselected'"
-            >
+            <div class="nav-icon" :class="route.path === '/genres' ? 'selected' : 'unselected'">
               <Genre />
             </div>
             <RouterLink class="link" to="/genres">Genres</RouterLink>
           </div>
           <div class="nav-item">
-            <div
-              class="nav-icon"
-              :class="route.path === '/actors' ? 'selected' : 'unselected'"
-            >
+            <div class="nav-icon" :class="route.path === '/actors' ? 'selected' : 'unselected'">
               <Actor />
             </div>
             <RouterLink class="link" to="/actors">Actors</RouterLink>
           </div>
           <div class="nav-item">
-            <div
-              class="nav-icon"
-              :class="route.path === '/directors' ? 'selected' : 'unselected'"
-            >
+            <div class="nav-icon" :class="route.path === '/directors' ? 'selected' : 'unselected'">
               <Director />
             </div>
             <RouterLink class="link" to="/directors">Directors</RouterLink>

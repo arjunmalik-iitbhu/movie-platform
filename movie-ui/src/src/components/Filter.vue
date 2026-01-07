@@ -6,16 +6,17 @@ import type { ENTITY_TYPE } from '@/constants'
 import { toTitleCase } from '@/utilities'
 import { useInfoStore } from '@/stores/store'
 
-const filterType = ref<ENTITY_TYPE>(ENTITIES[0]);
-const filterValue = ref<string>("");
-const store = useInfoStore();
+const filterType = ref<ENTITY_TYPE>(ENTITIES[0])
+const filterValue = ref<string>('')
+const store = useInfoStore()
 
 const props = defineProps<{
   entity: ENTITY_TYPE
-}>();
+}>()
 
-const filteredEntities = computed(() => ENTITIES.filter(e => e === filterType.value && filterValue.value));
-
+const filteredEntities = computed(() =>
+  ENTITIES.filter((e) => e === filterType.value && filterValue.value),
+)
 </script>
 
 <template>
@@ -26,15 +27,16 @@ const filteredEntities = computed(() => ENTITIES.filter(e => e === filterType.va
           {{ toTitleCase(entity) }}
         </option>
       </select>
-      <input :placeholder="`Search by ${filterType}`" v-model="filterValue">
-      <button v-on:click="store.fetch(
-        entity,
-        {
-          offset: store.data[`${entity}smeta`].offset,
-          limit: store.data[`${entity}smeta`].limit,
-          filters: filteredEntities.map(e => ({entity: filterType, value: filterValue}))
-        }
-      )">
+      <input :placeholder="`Search by ${filterType}`" v-model="filterValue" />
+      <button
+        v-on:click="
+          store.fetch(entity, {
+            offset: store.data[`${entity}smeta`].offset,
+            limit: store.data[`${entity}smeta`].limit,
+            filters: filteredEntities.map((e) => ({ entity: filterType, value: filterValue })),
+          })
+        "
+      >
         <SearchIcon />
       </button>
     </div>

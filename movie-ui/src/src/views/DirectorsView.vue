@@ -13,4 +13,3 @@ import TheWelcome from '../components/TheWelcome.vue'
   display: flex;
 }
 </style>
-

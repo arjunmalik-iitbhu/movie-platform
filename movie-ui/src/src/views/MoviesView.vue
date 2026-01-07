@@ -6,22 +6,27 @@ import Item from '@/components/EntityItem.vue'
 import { useInfoStore } from '@/stores/store'
 import { MOVIE, DEFAULT_IMAGE } from '@/constants'
 
-const store = useInfoStore();
+const store = useInfoStore()
 
-onMounted(async () =>{
+onMounted(async () => {
   if (!store.data.movies.length) store.fetch(MOVIE)
-});
-
+})
 </script>
 
 <template>
   <main class="movies">
-    <Actions class="movie-actions"/>
+    <Actions class="movie-actions" />
     <h1 class="movie-title">Movies</h1>
-    <Filter entity="movie" class="movie-filter"/>
+    <Filter entity="movie" class="movie-filter" />
     <div class="movie-items">
       <div v-for="movie in store.data.movies">
-        <Item :id="movie.id" :entity="MOVIE" :imagesrc="movie.imagesrc || DEFAULT_IMAGE" :title="movie.title" :subtitle="movie.release_year"/>
+        <Item
+          :id="movie.id"
+          :entity="MOVIE"
+          :imagesrc="movie.imagesrc || DEFAULT_IMAGE"
+          :title="movie.title"
+          :subtitle="movie.release_year"
+        />
       </div>
     </div>
   </main>

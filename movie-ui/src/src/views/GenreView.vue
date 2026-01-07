@@ -4,12 +4,12 @@ import Filter from '@/components/Filter.vue'
 
 const props = defineProps<{
   id: string
-}>();
+}>()
 </script>
 
 <template>
   <main class="genre">
-    <Actions class="genre-actions"/>
+    <Actions class="genre-actions" />
     <h1 class="genre-title">Genre</h1>
   </main>
 </template>

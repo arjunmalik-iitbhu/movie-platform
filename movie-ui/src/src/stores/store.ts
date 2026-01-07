@@ -6,22 +6,22 @@ import { PAGE_LIMIT } from '@/constants'
 interface Data {
   movies: Movie[]
   moviesmeta: {
-    offset: number,
+    offset: number
     limit: number
   }
   genres: Genre[]
   genresmeta: {
-    offset: number,
+    offset: number
     limit: number
   }
   actors: Actor[]
   actorsmeta: {
-    offset: number,
+    offset: number
     limit: number
   }
   directors: Director[]
   directorsmeta: {
-    offset: number,
+    offset: number
     limit: number
   }
 }
@@ -43,30 +43,39 @@ export const useInfoStore = defineStore('info', {
       },
       data: {
         movies: [],
-        moviesmeta: {offset: 0, limit: PAGE_LIMIT},
+        moviesmeta: { offset: 0, limit: PAGE_LIMIT },
         genres: [],
-        genresmeta: {offset: 0, limit: PAGE_LIMIT},
+        genresmeta: { offset: 0, limit: PAGE_LIMIT },
         actors: [],
-        actorsmeta: {offset: 0, limit: PAGE_LIMIT},
+        actorsmeta: { offset: 0, limit: PAGE_LIMIT },
         directors: [],
-        directorsmeta: {offset: 0, limit: PAGE_LIMIT},
+        directorsmeta: { offset: 0, limit: PAGE_LIMIT },
       },
     }
   },
   actions: {
     async fetch(
       entity: ENTITY_TYPE,
-      params?: {offset: number, limit: number, filters?: {entity: ENTITY_TYPE, value: string}[]}
+      params?: {
+        offset: number
+        limit: number
+        filters?: { entity: ENTITY_TYPE; value: string }[]
+      },
     ) {
-      const paramsVal = (
-        params || this.data.moviesmeta
-      ) as {offset: number, limit: number, filters?: {entity: ENTITY_TYPE, value: string}[]}
+      const paramsVal = (params || this.data.moviesmeta) as {
+        offset: number
+        limit: number
+        filters?: { entity: ENTITY_TYPE; value: string }[]
+      }
       const urlBase = `${config.API_BASE_URL}/${entity}s`
       const url = new URL(urlBase)
       const processedparams = {
         offset: String(paramsVal.offset),
         limit: String(paramsVal.limit),
-        ...(paramsVal?.filters?.reduce((curr, elem) => Object.assign(curr, {[elem.entity]: elem.value}), {}) || this.data.moviesmeta)
+        ...(paramsVal?.filters?.reduce(
+          (curr, elem) => Object.assign(curr, { [elem.entity]: elem.value }),
+          {},
+        ) || this.data.moviesmeta),
       }
       url.search = new URLSearchParams(processedparams).toString()
       const resp = await fetch(url, {
@@ -77,15 +86,17 @@ export const useInfoStore = defineStore('info', {
         throw new Error(`Error in fetch ${entity}. Response status: ${resp.status}`)
       }
       const entities = await resp.json()
-      Object.assign(this.data, {[`${entity}s`]: entities})
-      Object.assign(this.data, {[`${entity}smeta`]: {offset: paramsVal.offset, limit: paramsVal.offset}})
+      Object.assign(this.data, { [`${entity}s`]: entities })
+      Object.assign(this.data, {
+        [`${entity}smeta`]: { offset: paramsVal.offset, limit: paramsVal.offset },
+      })
     },
     async add(entity: ENTITY_TYPE, data: Movie | Genre | Actor | Director) {
       const resp = await fetch(`${config.API_BASE_URL}/${entity}s`, {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
       })
       if (!resp.ok) {
@@ -94,6 +105,6 @@ export const useInfoStore = defineStore('info', {
     },
     toggleNavBar() {
       this.settings.navBarVisible = !this.settings.navBarVisible
-    }
+    },
   },
 })

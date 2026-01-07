@@ -4,13 +4,12 @@ import { useInfoStore } from '@/stores/store'
 import AddIcon from '@/components/icons/IconAdd.vue'
 import MoreVertIcon from '@/components/icons/IconMoreVert.vue'
 
-const store = useInfoStore();
-const moreActionsVisible = ref(false);
+const store = useInfoStore()
+const moreActionsVisible = ref(false)
 
 const toggleMoreActions = () => {
   moreActionsVisible.value = !moreActionsVisible.value
 }
-
 </script>
 
 <template>

@@ -2,22 +2,21 @@
 import { useRouter } from 'vue-router'
 import type { ENTITY_TYPE } from '@/constants'
 
-const router = useRouter();
+const router = useRouter()
 
 const props = defineProps<{
-  id: string,
-  entity: ENTITY_TYPE,
-  imagesrc: string,
-  title: string,
+  id: string
+  entity: ENTITY_TYPE
+  imagesrc: string
+  title: string
   subtitle: string
-}>();
-
+}>()
 </script>
 
 <template>
   <div class="entity-item">
     <button class="entity-item-button" v-on:click="router.push(`/${entity}/${id}`)">
-      <img :src="imagesrc"/>
+      <img :src="imagesrc" />
       <h5>{{ title }}</h5>
       <h6>{{ subtitle }}</h6>
     </button>

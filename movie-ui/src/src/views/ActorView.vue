@@ -4,12 +4,12 @@ import Filter from '@/components/Filter.vue'
 
 const props = defineProps<{
   id: string
-}>();
+}>()
 </script>
 
 <template>
   <main class="actor">
-    <Actions class="actor-actions"/>
+    <Actions class="actor-actions" />
     <h1 class="actor-title">Actor</h1>
   </main>
 </template>
