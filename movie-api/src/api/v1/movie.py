@@ -45,9 +45,8 @@ async def update_movie(movie_id: str, session: AsyncSession = Depends(get_sessio
     return HTTPException(status_code=403, detail=f"Operation forbidden")
 
 @router.post("/movie", response_model=Movie, status_code=status.HTTP_201_CREATED)
-async def create_movie(movie: MovieCreate, session: AsyncSession = Depends(get_session)):
-    db_movie = Movie.model_validate(movie)
-    await session.add(db_movie)
+async def create_movie(movie: Movie, session: AsyncSession = Depends(get_session)):
+    session.add(movie)
     await session.commit()
-    await session.refresh(db_movie)
-    return db_movie
+    await session.refresh(movie)
+    return movie
