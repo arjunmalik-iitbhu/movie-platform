@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import List, Optional
+from typing import Optional
 
 class MovieCreate(BaseModel):
     """
@@ -8,5 +8,5 @@ class MovieCreate(BaseModel):
     title: str
     release_year: int
     director_id: Optional[int] = None
-    actor_ids: Optional[List[int]] = None
-    genre_ids: Optional[List[int]] = None
+    actor_ids: Optional[list[int]] = None
+    genre_ids: Optional[list[int]] = None
