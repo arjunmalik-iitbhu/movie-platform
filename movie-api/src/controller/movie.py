@@ -1,10 +1,11 @@
 from service.movie import MovieService
 
+
 class MovieController:
     def __init__(self, service):
         self.service = service
 
-    async def create_movie(self, movie_data:MovieBaseModel):
+    async def create_movie(self, movie_data: MovieBaseModel):
         return await self.service.create_movie(movie_data)
 
     async def read_movies(self):

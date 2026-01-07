@@ -12,6 +12,7 @@ router = APIRouter(
     responses={404: {"description": "Not found"}},
 )
 
+
 @router.get("/movies", response_model=list[Movie])
 async def read_movies(
     offset: int = 0,
@@ -20,22 +21,21 @@ async def read_movies(
     genre: Optional[str] = None,
     actor: Optional[str] = None,
     director: Optional[str] = None,
-    session: AsyncSession = Depends(get_session)
+    session: AsyncSession = Depends(get_session),
 ):
     result = await session.exec(select(Movie).offset(offset).limit(limit))
     movies = result.all()
     return movies
 
+
 @router.get("/movie/{movie_id}", response_model=list[Movie])
-async def read_movie(
-    movie_id: str,
-    session: AsyncSession = Depends(get_session)
-):
+async def read_movie(movie_id: str, session: AsyncSession = Depends(get_session)):
     result = await session.exec(select(Movie).where(Movie.id == int(movie_id)))
     movie = result.first()
     if not movie or not movie.id:
         raise HTTPException(status_code=404, detail=f"Movie {movie_id} not found")
     return movie
+
 
 @router.put(
     "/movie/{movie_id}",
@@ -43,6 +43,7 @@ async def read_movie(
 )
 async def update_movie(movie_id: str, session: AsyncSession = Depends(get_session)):
     return HTTPException(status_code=403, detail=f"Operation forbidden")
+
 
 @router.post("/movie", response_model=Movie, status_code=status.HTTP_201_CREATED)
 async def create_movie(movie: Movie, session: AsyncSession = Depends(get_session)):

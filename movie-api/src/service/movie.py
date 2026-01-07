@@ -1,8 +1,8 @@
 class MovieService:
     def __init__(self, repository):
-        self.repository = repository 
+        self.repository = repository
 
-    async def create_movie(self, movie_data:MovieBaseModel):
+    async def create_movie(self, movie_data: MovieBaseModel):
         return await self.repository.create_movie(movie_data)
 
     async def read_movies(self):

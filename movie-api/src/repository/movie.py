@@ -10,6 +10,6 @@ class MovieRepository:
 
     async def create_movie(self, movie_data):
         pass
-            
+
     async def update_movie(self, movie_id, movie_data):
         pass
