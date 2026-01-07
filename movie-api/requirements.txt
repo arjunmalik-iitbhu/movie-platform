@@ -1,6 +1,5 @@
 fastapi[standard]==0.128.0
-uvicorn
-sqlmodel==0.0.31
+sqlmodel[async]==0.0.31
 python-dotenv==1.2.1
-pydantic-settings
+pydantic-settings==2.12.0
 pre-commit==4.5.1
