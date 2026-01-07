@@ -10,4 +10,4 @@ postgres_db = settings.postgres_db
 
 _DATABASE_URI = f"postgres://{postgres_user}:{postgres_password}@{postgres_host}:{postgres_port}/{postgres_db}"
 
-engine = create_engine(str(_DATABASE_URI))
+engine = create_engine(str(_DATABASE_URI), echo=True)

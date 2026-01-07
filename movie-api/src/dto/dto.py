@@ -1,0 +1,12 @@
+from pydantic import BaseModel
+from typing import List, Optional
+
+class MovieCreate(BaseModel):
+    """
+    Data Transfer Object for creating a new movie.
+    """
+    title: str
+    release_year: int
+    director_id: Optional[int] = None
+    actor_ids: Optional[List[int]] = None
+    genre_ids: Optional[List[int]] = None
