@@ -3,7 +3,6 @@ from . import actor, director, genre, movie
 
 router = APIRouter(
     prefix="/v1",
-    tags=["v1"],
     dependencies=[],
     responses={404: {"description": "Not found"}},
 )
