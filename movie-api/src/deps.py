@@ -1,8 +1,9 @@
-from collections.abc import Generator
+from collections.abc import AsyncGenerator
 
 from sqlmodel import Session
-from .db import engine
+from sqlmodel.ext.asyncio.session import AsyncSession
+from db import engine
 
-def get_session() -> Generator[Session, None, None]:
-    with Session(engine) as session:
+async def get_session() -> AsyncGenerator[AsyncSession, None, None]:
+    async with AsyncSession(engine) as session:
         yield session
