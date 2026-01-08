@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import ActionsBar from '@/components/ActionsBar.vue'
-import Filter from '@/components/Filter.vue'
+import Filter from '@/components/SearchFilter.vue'
 import Item from '@/components/EntityItem.vue'
 import { useInfoStore } from '@/stores/store'
 import { MOVIE, DEFAULT_IMAGE } from '@/constants'
