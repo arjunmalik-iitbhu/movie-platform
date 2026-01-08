@@ -4,7 +4,7 @@ import type { ENTITY_TYPE } from '@/constants'
 
 const router = useRouter()
 
-const props = defineProps<{
+defineProps<{
   id: string
   entity: ENTITY_TYPE
   imageSrc: string

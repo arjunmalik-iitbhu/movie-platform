@@ -1,15 +1,14 @@
 <script setup lang="ts">
-import Actions from '@/components/Actions.vue'
-import Filter from '@/components/Filter.vue'
+import ActionsBar from '@/components/ActionsBar.vue'
 
-const props = defineProps<{
+defineProps<{
   id: string
 }>()
 </script>
 
 <template>
   <main class="director">
-    <Actions class="director-actions" />
+    <ActionsBar class="director-actions" />
     <h1 class="director-title">Director</h1>
   </main>
 </template>

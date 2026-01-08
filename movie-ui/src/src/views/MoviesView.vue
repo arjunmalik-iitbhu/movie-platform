@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
-import Actions from '@/components/Actions.vue'
+import ActionsBar from '@/components/ActionsBar.vue'
 import Filter from '@/components/Filter.vue'
 import Item from '@/components/EntityItem.vue'
 import { useInfoStore } from '@/stores/store'
@@ -15,11 +15,11 @@ onMounted(async () => {
 
 <template>
   <main class="movies">
-    <Actions class="movie-actions" entity="movie"/>
+    <ActionsBar class="movie-actions" entity="movie"/>
     <h1 class="movie-title">Movies</h1>
     <Filter entity="movie" class="movie-filter" />
     <div class="movie-items">
-      <div v-for="movie in store.data.movies">
+      <div v-for="movie in store.data.movies" v-bind:key="movie.id">
         <Item
           :id="movie.id"
           :entity="MOVIE"

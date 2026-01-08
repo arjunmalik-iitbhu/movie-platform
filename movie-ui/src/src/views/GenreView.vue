@@ -1,15 +1,14 @@
 <script setup lang="ts">
-import Actions from '@/components/Actions.vue'
-import Filter from '@/components/Filter.vue'
+import ActionsBar from '@/components/ActionsBar.vue'
 
-const props = defineProps<{
+defineProps<{
   id: string
 }>()
 </script>
 
 <template>
   <main class="genre">
-    <Actions class="genre-actions" />
+    <ActionsBar class="genre-actions" />
     <h1 class="genre-title">Genre</h1>
   </main>
 </template>
