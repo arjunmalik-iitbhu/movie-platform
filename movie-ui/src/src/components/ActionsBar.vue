@@ -89,11 +89,13 @@ const toggleMoreActions = () => {
 }
 
 const showAddEntity = () => {
-  (document.getElementsByClassName(DIALOG_CLASS)[0] as HTMLDialogElement).showModal()
+  const elem = (document.getElementsByClassName(DIALOG_CLASS)[0] as HTMLDialogElement)
+  elem.showModal()
 }
 
 const closeAddEntity = () => {
-  (document.getElementsByClassName(DIALOG_CLASS)[0] as HTMLDialogElement).close()
+  const elem = (document.getElementsByClassName(DIALOG_CLASS)[0] as HTMLDialogElement)
+  elem.close()
 }
 
 const addEntity = () => {
@@ -184,15 +186,15 @@ const addEntity = () => {
     display: flex;
     flex-direction: column;
     .add-entity {
+      background-color: var(--color-background);
       position: fixed;
       top: 20vh;
       left: 40vw;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 1rem;
+      h2 {
+        text-align: center;
+      }
       .add-entity-input {
+        padding: 1rem;
         display: flex;
         flex-direction: column;
         align-self: stretch;
@@ -206,6 +208,11 @@ const addEntity = () => {
         display: flex;
         flex-direction: row;
         gap: 1rem;
+        justify-content: center;
+        button {
+          padding-left: 1rem;
+          padding-right: 1rem;
+        }
       }
     }
   }
