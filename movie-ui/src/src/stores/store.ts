@@ -88,11 +88,11 @@ export const useInfoStore = defineStore('info', {
       const entities = await resp.json()
       Object.assign(this.data, { [`${entity}s`]: entities })
       Object.assign(this.data, {
-        [`${entity}smeta`]: { offset: paramsVal.offset, limit: paramsVal.offset },
+        [`${entity}smeta`]: { offset: paramsVal.offset, limit: paramsVal.limit },
       })
     },
     async add(entity: ENTITY_TYPE, data: EntityInterface) {
-      const resp = await fetch(`${config.API_BASE_URL}/version/v1/${entity}s`, {
+      const resp = await fetch(`${config.API_BASE_URL}/version/v1/${entity}`, {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
