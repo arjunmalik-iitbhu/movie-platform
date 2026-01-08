@@ -84,17 +84,16 @@ const getEntityInput = (className: string): string => (
   (document.getElementsByClassName(className)[0] as HTMLInputElement)?.value || ""
 )
 
-const toggleAddEntity = () => {
-  const dialogElem = (document.getElementsByClassName(DIALOG_CLASS)[0] as HTMLDialogElement)
-  if (dialogElem?.open) {
-    dialogElem?.close()
-  } else {
-    dialogElem?.showModal()
-  }
-}
-
 const toggleMoreActions = () => {
   moreActionsVisible.value = !moreActionsVisible.value
+}
+
+const showAddEntity = () => {
+  (document.getElementsByClassName(DIALOG_CLASS)[0] as HTMLDialogElement).showModal()
+}
+
+const closeAddEntity = () => {
+  (document.getElementsByClassName(DIALOG_CLASS)[0] as HTMLDialogElement).close()
 }
 
 const addEntity = () => {
@@ -110,7 +109,7 @@ const addEntity = () => {
       {} as EntityInterface
     )
   )
-  toggleAddEntity()
+  closeAddEntity()
 }
 
 </script>
@@ -118,7 +117,7 @@ const addEntity = () => {
 <template>
   <div class="actions">
     <div class="add-action">
-      <button class="add-action-button" v-on:click="toggleAddEntity">
+      <button class="add-action-button" v-on:click="showAddEntity">
         <AddIcon />
       </button>
       <div class="add-action-modal">
@@ -137,14 +136,11 @@ const addEntity = () => {
                 ),
                 false
               )"
-              v-on:click="addEntity()"
+              v-on:click="addEntity"
             >
               Submit
             </button>
-            <button
-              class="add-entity-close-button"
-              v-on:click="toggleAddEntity()"
-            >
+            <button class="add-entity-close-button" v-on:click="closeAddEntity">
               Close
             </button>
           </div>
