@@ -3,9 +3,79 @@ import { ref } from 'vue'
 import { useInfoStore } from '@/stores/store'
 import AddIcon from '@/components/icons/IconAdd.vue'
 import MoreVertIcon from '@/components/icons/IconMoreVert.vue'
+import type { ENTITIES, ENTITY_TYPE, EntityInterface } from '@/constants'
+
+const ADD_ENTITY_FIELDS: Record<ENTITY_TYPE, {name: string, type: string, required: boolean}[]> = {
+  movie: [
+    {
+      name: "title",
+      type: "string",
+      required: true
+    },
+    {
+      name: "releaseYear",
+      type: "number",
+      required: true
+    },
+    {
+      name: "imageSrc",
+      type: "number",
+      required: false
+    }
+  ],
+  genre: [
+    {
+      name: "name",
+      type: "string",
+      required: true
+    },
+    {
+      name: "imageSrc",
+      type: "string",
+      required: false
+    }
+  ],
+  actor: [
+    {
+      name: "name",
+      type: "string",
+      required: true
+    },
+    {
+      name: "imageSrc",
+      type: "string",
+      required: false
+    }
+  ],
+  director: [
+    {
+      name: "name",
+      type: "string",
+      required: true
+    },
+    {
+      name: "imageSrc",
+      type: "string",
+      required: false
+    }
+  ],
+};
 
 const store = useInfoStore()
+const addMovieModalVisible = ref(false)
 const moreActionsVisible = ref(false)
+
+const props = defineProps<{
+  entity: ENTITY_TYPE,
+}>()
+
+const getEntityInput = (className: string): string => (
+  (document.getElementsByClassName(className)[0] as HTMLInputElement)?.value || ""
+)
+
+const toggleAddEntity = () => {
+  addMovieModalVisible.value = !addMovieModalVisible.value
+}
 
 const toggleMoreActions = () => {
   moreActionsVisible.value = !moreActionsVisible.value
@@ -14,6 +84,45 @@ const toggleMoreActions = () => {
 
 <template>
   <div class="actions">
+    <div class="add-action">
+      <button class="add-action-button" v-on:click="toggleAddEntity">
+        <AddIcon />
+      </button>
+      <template v-if="addMovieModalVisible">
+        <div class="add-action-modal">
+          <dialog class="add-entity">
+            <h4>Add {{ entity }}</h4>
+            <div class="add-entity-input" v-for="field in ADD_ENTITY_FIELDS[entity]">
+              {{ field.name }} {{ field.required ? '': ' [optional]' }}
+              <input :class="`input-${field.name}`" :type="field.type" :required="field.required"/>
+            </div>
+            <button
+              class="add-entity-button"
+              :disabled="ADD_ENTITY_FIELDS[entity].reduce(
+                (curr, elem) => (
+                  curr || (elem.required && !Boolean(getEntityInput(`input-${elem.name}`)))
+                ),
+                false
+              )"
+              v-on:click="store.add(
+                entity,
+                ADD_ENTITY_FIELDS[entity].reduce(
+                  (curr, elem) => (
+                    Object.assign(
+                      curr,
+                      {[elem.name]: getEntityInput(`input-${elem.name}`)}
+                    )
+                  ),
+                  {} as EntityInterface
+                )
+              )"
+            >
+              Submit
+            </button>
+          </dialog>
+        </div>
+      </template>
+    </div>
     <div class="more-actions">
       <button class="more-action" v-on:click="toggleMoreActions">
         <MoreVertIcon />
@@ -34,7 +143,7 @@ const toggleMoreActions = () => {
 <style>
 .actions {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: flex-end;
   justify-content: flex-end;
   button {
@@ -61,6 +170,9 @@ const toggleMoreActions = () => {
     border-radius: 1rem;
     z-index: 10;
     box-shadow: 0 4px 6px var(--color-border-hover);
+  }
+  .add-action {
+    display: flex;
   }
 }
 </style>

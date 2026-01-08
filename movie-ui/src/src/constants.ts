@@ -12,26 +12,28 @@ export type ENTITY_TYPE = (typeof ENTITIES)[number]
 export interface Movie {
   id: string
   title: string
-  release_year: string
-  imagesrc?: string
+  releaseYear: string
+  imageSrc?: string
 }
 
 export interface Genre {
   id: string
   name: string
-  imagesrc?: string
+  imageSrc?: string
 }
 
 export interface Actor {
   id: string
   name: string
-  imagesrc?: string
+  imageSrc?: string
 }
 
 export interface Director {
   id: string
   name: string
-  imagesrc?: string
+  imageSrc?: string
 }
+
+export type EntityInterface = Movie | Genre | Actor | Director
 
 export const PAGE_LIMIT = 10

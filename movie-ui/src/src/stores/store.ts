@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { config } from '../config'
 import type { ENTITY_TYPE, Movie, Genre, Actor, Director } from '@/constants'
-import { PAGE_LIMIT } from '@/constants'
+import { PAGE_LIMIT, EntityInterface } from '@/constants'
 
 interface Data {
   movies: Movie[]
@@ -91,7 +91,7 @@ export const useInfoStore = defineStore('info', {
         [`${entity}smeta`]: { offset: paramsVal.offset, limit: paramsVal.offset },
       })
     },
-    async add(entity: ENTITY_TYPE, data: Movie | Genre | Actor | Director) {
+    async add(entity: ENTITY_TYPE, data: EntityInterface) {
       const resp = await fetch(`${config.API_BASE_URL}/${entity}s`, {
         method: 'POST',
         body: JSON.stringify(data),

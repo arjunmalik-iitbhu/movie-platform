@@ -15,7 +15,7 @@ onMounted(async () => {
 
 <template>
   <main class="movies">
-    <Actions class="movie-actions" />
+    <Actions class="movie-actions" entity="movie"/>
     <h1 class="movie-title">Movies</h1>
     <Filter entity="movie" class="movie-filter" />
     <div class="movie-items">
@@ -23,9 +23,9 @@ onMounted(async () => {
         <Item
           :id="movie.id"
           :entity="MOVIE"
-          :imagesrc="movie.imagesrc || DEFAULT_IMAGE"
+          :imageSrc="movie.imageSrc || DEFAULT_IMAGE"
           :title="movie.title"
-          :subtitle="movie.release_year"
+          :subtitle="movie.releaseYear"
         />
       </div>
     </div>
@@ -39,6 +39,7 @@ onMounted(async () => {
   flex: 1;
   .movie-actions {
     display: flex;
+    flex-direction: row;
     justify-content: flex-end;
   }
   .movie-title {

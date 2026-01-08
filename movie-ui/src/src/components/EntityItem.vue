@@ -7,7 +7,7 @@ const router = useRouter()
 const props = defineProps<{
   id: string
   entity: ENTITY_TYPE
-  imagesrc: string
+  imageSrc: string
   title: string
   subtitle: string
 }>()
@@ -16,7 +16,7 @@ const props = defineProps<{
 <template>
   <div class="entity-item">
     <button class="entity-item-button" v-on:click="router.push(`/${entity}/${id}`)">
-      <img :src="imagesrc" />
+      <img :src="imageSrc" />
       <h5>{{ title }}</h5>
       <h6>{{ subtitle }}</h6>
     </button>
