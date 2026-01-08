@@ -8,6 +8,7 @@ class Settings(BaseSettings):
     postgres_db: str
     postgres_user: str
     postgres_password: str
+    cors_origins: str
 
     model_config = SettingsConfigDict(env_file=".env")
 
