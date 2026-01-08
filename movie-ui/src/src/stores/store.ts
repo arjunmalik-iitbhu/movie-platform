@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { config } from '../config'
-import type { ENTITY_TYPE, Movie, Genre, Actor, Director } from '@/constants'
-import { PAGE_LIMIT, EntityInterface } from '@/constants'
+import type { ENTITY_TYPE, Movie, Genre, Actor, Director, EntityInterface } from '@/constants'
+import { PAGE_LIMIT } from '@/constants'
 
 interface Data {
   movies: Movie[]
