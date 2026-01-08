@@ -24,35 +24,23 @@ defineProps<{
 </template>
 
 <style>
-.actions {
+.entity-item {
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  justify-content: flex-end;
-  button {
-    background-color: var(--color-white-soft);
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: flex-start;
+  .entity-item-button {
+    img {
+      height: 20vh;
+      width: 20vh;
+    }
     border: none;
-    border-radius: 0.5rem;
-    height: 5vh;
+    border-radius: 1.5rem;
   }
   button:hover {
     cursor: pointer;
     background-color: var(--color-hover);
-  }
-  .more-actions-menu {
-    position: fixed;
-    top: auto;
-    right: 2rem;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    justify-content: flex-end;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-    border: 1px solid var(--color-border);
-    border-radius: 1rem;
-    z-index: 10;
-    box-shadow: 0 4px 6px var(--color-border-hover);
   }
 }
 </style>

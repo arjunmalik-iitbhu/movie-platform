@@ -67,7 +67,7 @@ export const useInfoStore = defineStore('info', {
         limit: number
         filters?: { entity: ENTITY_TYPE; value: string }[]
       }
-      const urlBase = `${config.API_BASE_URL}/${entity}s`
+      const urlBase = `${config.API_BASE_URL}/version/v1/${entity}s`
       const url = new URL(urlBase)
       const processedparams = {
         offset: String(paramsVal.offset),
@@ -92,7 +92,7 @@ export const useInfoStore = defineStore('info', {
       })
     },
     async add(entity: ENTITY_TYPE, data: EntityInterface) {
-      const resp = await fetch(`${config.API_BASE_URL}/${entity}s`, {
+      const resp = await fetch(`${config.API_BASE_URL}/version/v1/${entity}s`, {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
