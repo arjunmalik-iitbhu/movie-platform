@@ -13,7 +13,7 @@ router = APIRouter(
 )
 
 
-@router.get("/movies", response_model=list[Movie])
+@router.get("/movies", response_model=list[MovieRes])
 async def read_movies(
     offset: int = 0,
     limit: int = 10,
@@ -25,7 +25,7 @@ async def read_movies(
 ):
     result = await session.exec(select(Movie).offset(offset).limit(limit))
     movies = result.all()
-    return [MovieRes().model_validate(movie) for movie in movies]
+    return [MovieRes(**movie.model_dump()) for movie in movies]
 
 
 @router.get("/movie/{movie_id}", response_model=list[Movie])
