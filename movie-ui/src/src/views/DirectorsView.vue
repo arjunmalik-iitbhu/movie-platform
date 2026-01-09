@@ -16,7 +16,7 @@ onMounted(async () => {
 <template>
   <main class="directors">
     <ActionsBar class="director-actions" entity="director"/>
-    <h1 class="director-title">Movies</h1>
+    <h1 class="director-title">Directors</h1>
     <Filter entity="director" class="director-filter" />
     <div class="director-items">
       <div v-for="director in store.data.directors" v-bind:key="director.id">
