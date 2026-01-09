@@ -2,7 +2,7 @@ from pydantic import BaseModel
 from typing import Optional
 
 
-class MovieCreate(BaseModel):
+class MovieCreateReq(BaseModel):
     """
     Data Transfer Object for creating a new movie.
     """

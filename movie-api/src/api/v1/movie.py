@@ -3,7 +3,7 @@ from fastapi import APIRouter, HTTPException, Depends, status
 from sqlmodel.ext.asyncio.session import AsyncSession
 from sqlmodel import select
 from src.deps import get_session
-from src.dto import MovieCreate
+from src.dto import MovieRes
 from src.model.entity import Movie
 
 router = APIRouter(
@@ -25,7 +25,7 @@ async def read_movies(
 ):
     result = await session.exec(select(Movie).offset(offset).limit(limit))
     movies = result.all()
-    return movies
+    return [MovieRes().model_validate(movie) for movie in movies]
 
 
 @router.get("/movie/{movie_id}", response_model=list[Movie])
