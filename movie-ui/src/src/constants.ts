@@ -10,26 +10,26 @@ export const ENTITIES = [MOVIE, GENRE, ACTOR, DIRECTOR] as const
 export type ENTITY_TYPE = (typeof ENTITIES)[number]
 
 export interface Movie {
-  id: string
+  id: number
   title: string
-  releaseYear: string
+  releaseYear: number
   imageSrc?: string
 }
 
 export interface Genre {
-  id: string
+  id: number
   name: string
   imageSrc?: string
 }
 
 export interface Actor {
-  id: string
+  id: number
   name: string
   imageSrc?: string
 }
 
 export interface Director {
-  id: string
+  id: number
   name: string
   imageSrc?: string
 }
