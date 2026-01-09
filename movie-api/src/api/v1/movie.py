@@ -4,7 +4,7 @@ from sqlmodel.ext.asyncio.session import AsyncSession
 from sqlmodel import select
 from sqlalchemy.orm import joinedload
 from src.deps import get_session
-from src.dto import MovieRes, MovieCreateReq, GenreRes, ActorRes, MovieRatingRes
+from src.dto import MovieRes, MovieCreateReq, GenreRes, ActorRes, DirectorRes, MovieRatingRes
 from src.model.entity import Movie, MovieToGenre, MovieToActor
 
 router = APIRouter(
@@ -16,18 +16,18 @@ router = APIRouter(
 def _get_movie_res(movie: Movie):
     movie_res = MovieRes(**movie.model_dump())
     movie_res.genres = [
-        GenreRes(movie_to_genre_row.genre.model_dump())
+        GenreRes(**movie_to_genre_row.genre.model_dump())
         for movie_to_genre_row in movie.movie_to_genre
         if movie_to_genre_row.genre
     ]
     movie_res.actors = [
-        ActorRes(movie_to_actor_row.actor.model_dump())
+        ActorRes(**movie_to_actor_row.actor.model_dump())
         for movie_to_actor_row in movie.movie_to_actor
         if movie_to_actor_row.actor
     ]
     if movie.director:
-        movie_res.director = ActorRes(movie.director.model_dump())
-    movie_res.ratings = [MovieRatingRes(movie_rating_row.model_dump()) for movie_rating_row in movie.movie_rating]
+        movie_res.director = DirectorRes(**movie.director.model_dump())
+    movie_res.ratings = [MovieRatingRes(**movie_rating_row.model_dump()) for movie_rating_row in movie.movie_rating]
     return movie_res
 
 
