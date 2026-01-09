@@ -1,6 +1,3 @@
-from service.movie import MovieService
-
-
 class MovieController:
     def __init__(self, service):
         self.service = service
