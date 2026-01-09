@@ -3,7 +3,7 @@ from fastapi import APIRouter, HTTPException, Depends, status
 from sqlmodel.ext.asyncio.session import AsyncSession
 from sqlmodel import select
 from src.deps import get_session
-from src.dto import ActorRes
+from src.dto import ActorRes, ActorCreateReq
 from src.model.entity import Actor
 
 
@@ -47,7 +47,8 @@ async def update_actor(actor_id: str, session: AsyncSession = Depends(get_sessio
 
 
 @router.post("/actor", response_model=Actor, status_code=status.HTTP_201_CREATED)
-async def create_actor(actor: Actor, session: AsyncSession = Depends(get_session)):
+async def create_actor(actorReq: ActorCreateReq, session: AsyncSession = Depends(get_session)):
+    actor = Actor(**actorReq.model_dump(by_alias=False))
     session.add(actor)
     await session.commit()
     await session.refresh(actor)

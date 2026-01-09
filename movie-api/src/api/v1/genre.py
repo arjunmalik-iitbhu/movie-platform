@@ -3,7 +3,7 @@ from fastapi import APIRouter, HTTPException, Depends, status
 from sqlmodel.ext.asyncio.session import AsyncSession
 from sqlmodel import select
 from src.deps import get_session
-from src.dto import GenreRes
+from src.dto import GenreRes, GenreCreateReq
 from src.model.entity import Genre
 
 router = APIRouter(
@@ -45,7 +45,8 @@ async def update_genre(genre_id: str, session: AsyncSession = Depends(get_sessio
 
 
 @router.post("/genre", response_model=Genre, status_code=status.HTTP_201_CREATED)
-async def create_genre(genre: Genre, session: AsyncSession = Depends(get_session)):
+async def create_genre(genreReq: GenreCreateReq, session: AsyncSession = Depends(get_session)):
+    genre = Genre(**genreReq.model_dump(by_alias=False))
     session.add(genre)
     await session.commit()
     await session.refresh(genre)

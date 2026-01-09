@@ -19,3 +19,26 @@ class MovieCreateReq(BaseSchema):
     director_id: Optional[int] = None
     actor_ids: Optional[list[int]] = None
     genre_ids: Optional[list[int]] = None
+
+class ActorCreateReq(BaseSchema):
+    """
+    Data Transfer Object for creating a new actor.
+    """
+
+    name: str
+    movie_ids: Optional[list[int]] = None
+
+class DirectorCreateReq(BaseSchema):
+    """
+    Data Transfer Object for creating a new director.
+    """
+
+    name: str
+
+class GenreCreateReq(BaseSchema):
+    """
+    Data Transfer Object for creating a new genre.
+    """
+
+    name: str
+    movie_ids: Optional[list[int]] = None

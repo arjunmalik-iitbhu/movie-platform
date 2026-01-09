@@ -3,7 +3,7 @@ from fastapi import APIRouter, HTTPException, Depends, status
 from sqlmodel.ext.asyncio.session import AsyncSession
 from sqlmodel import select
 from src.deps import get_session
-from src.dto import DirectorRes
+from src.dto import DirectorRes, DirectorCreateReq
 from src.model.entity import Director
 
 
@@ -47,7 +47,8 @@ async def update_director(director_id: str, session: AsyncSession = Depends(get_
 
 
 @router.post("/director", response_model=Director, status_code=status.HTTP_201_CREATED)
-async def create_director(director: Director, session: AsyncSession = Depends(get_session)):
+async def create_director(directorReq: DirectorCreateReq, session: AsyncSession = Depends(get_session)):
+    director = Director(**directorReq.model_dump(by_alias=False))
     session.add(director)
     await session.commit()
     await session.refresh(director)
