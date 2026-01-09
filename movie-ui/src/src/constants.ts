@@ -4,12 +4,13 @@ export const MOVIE = 'movie'
 export const GENRE = 'genre'
 export const ACTOR = 'actor'
 export const DIRECTOR = 'director'
+export const MOVIE_RATING = 'rating'
 
 export const ENTITIES = [MOVIE, GENRE, ACTOR, DIRECTOR] as const
 
 export type ENTITY_TYPE = (typeof ENTITIES)[number]
 
-export interface Rating {
+export interface MovieRating {
   id: string
   comment: string
   story: number
@@ -25,7 +26,7 @@ export interface Movie {
   genres?: Genre[]
   actors?: Actor[]
   director?: Director
-  ratings?: Rating[]
+  ratings?: MovieRating[]
 }
 
 export interface Genre {

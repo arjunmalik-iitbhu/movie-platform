@@ -38,6 +38,8 @@
   --color-hover: var(--color-secondary);
 
   --section-gap: 160px;
+  --color-button-unselect: var(--color-text-light-2);
+  --color-button-select: var(--color-primary);
 }
 
 *,
