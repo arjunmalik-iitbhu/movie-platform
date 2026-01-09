@@ -21,11 +21,11 @@ onMounted(async () => {
     <div class="movie-items">
       <div v-for="movie in store.data.movies" v-bind:key="movie.id">
         <Item
-          :id="movie.id"
+          :id="String(movie.id)"
           :entity="MOVIE"
           :imageSrc="movie.imageSrc || DEFAULT_IMAGE"
           :title="movie.title"
-          :subtitle="movie.releaseYear"
+          :subtitle="String(movie.releaseYear)"
         />
       </div>
     </div>
