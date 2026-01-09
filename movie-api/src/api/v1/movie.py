@@ -2,9 +2,10 @@ from typing import Optional
 from fastapi import APIRouter, HTTPException, Depends, status
 from sqlmodel.ext.asyncio.session import AsyncSession
 from sqlmodel import select
+from sqlalchemy.orm import joinedload
 from src.deps import get_session
-from src.dto import MovieRes, MovieCreateReq
-from src.model.entity import Movie
+from src.dto import MovieRes, MovieCreateReq, GenreRes, ActorRes, MovieRatingRes
+from src.model.entity import Movie, MovieToGenre, MovieToActor
 
 router = APIRouter(
     tags=["movies"],
@@ -23,9 +24,34 @@ async def read_movies(
     director: Optional[str] = None,
     session: AsyncSession = Depends(get_session),
 ):
-    result = await session.exec(select(Movie).offset(offset).limit(limit))
-    movies = result.all()
-    return [MovieRes(**movie.model_dump()) for movie in movies]
+    result = await session.exec(
+        select(Movie).options(
+            joinedload(Movie.movie_to_genre).joinedload(MovieToGenre.genre),
+            joinedload(Movie.movie_to_actor).joinedload(MovieToActor.actor),
+            joinedload(Movie.director),
+            joinedload(Movie.movie_rating)
+        ).offset(offset).limit(limit)
+    )
+    movies = result.unique().all()
+    movies_res = []
+    for elem in movies:
+        movie: Movie = elem
+        movie_res = MovieRes(**movie.model_dump())
+        movie_res.genres = [
+            GenreRes(movie_to_genre_row.genre.model_dump())
+            for movie_to_genre_row in movie.movie_to_genre
+            if movie_to_genre_row.genre
+        ]
+        movie_res.actors = [
+            ActorRes(movie_to_actor_row.actor.model_dump())
+            for movie_to_actor_row in movie.movie_to_actor
+            if movie_to_actor_row.actor
+        ]
+        if movie.director:
+            movie_res.director = ActorRes(movie.director.model_dump())
+        movie_res.ratings = [MovieRatingRes(movie_rating_row.model_dump()) for movie_rating_row in movie.movie_rating]
+        movies_res.append(movie_res)
+    return movies_res
 
 
 @router.get("/movie/{movie_id}", response_model=MovieRes)

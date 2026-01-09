@@ -10,16 +10,6 @@ class BaseSchema(BaseModel):
         from_attributes=True
     )
 
-class MovieRes(BaseSchema):
-    """
-    Data Transfer Object for returning a movie.
-    """
-
-    id: int
-    title: str
-    release_year: int
-    director_id: Optional[int] = None
-
 class ActorRes(BaseSchema):
     """
     Data Transfer Object for returning a actor.
@@ -44,3 +34,26 @@ class GenreRes(BaseSchema):
     id: int
     name: str
 
+class MovieRatingRes(BaseSchema):
+    """
+    Data Transfer Object for returning a rating.
+    """
+
+    id: int
+    comment: str
+    story: int
+    direction: int
+    acting: int
+
+class MovieRes(BaseSchema):
+    """
+    Data Transfer Object for returning a movie.
+    """
+
+    id: int
+    title: str
+    release_year: int
+    genres: list[GenreRes] = None
+    actors: list[ActorRes] = None
+    director: DirectorRes = None
+    ratings: list[MovieRatingRes] = None
