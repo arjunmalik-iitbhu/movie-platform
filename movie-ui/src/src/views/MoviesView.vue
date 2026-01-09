@@ -42,6 +42,11 @@ onMounted(async () => {
     flex-direction: row;
     justify-content: flex-end;
   }
+  .movie-items {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
   .movie-title {
     padding-top: 1rem;
     padding-bottom: 1rem;
