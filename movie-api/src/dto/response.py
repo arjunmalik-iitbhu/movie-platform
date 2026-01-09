@@ -19,3 +19,28 @@ class MovieRes(BaseSchema):
     title: str
     release_year: int
     director_id: Optional[int] = None
+
+class ActorRes(BaseSchema):
+    """
+    Data Transfer Object for returning a actor.
+    """
+
+    id: int
+    name: str
+
+class DirectorRes(BaseSchema):
+    """
+    Data Transfer Object for returning a director.
+    """
+
+    id: int
+    name: str
+
+class GenreRes(BaseSchema):
+    """
+    Data Transfer Object for returning a genre.
+    """
+
+    id: int
+    name: str
+
