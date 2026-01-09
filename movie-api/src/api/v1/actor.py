@@ -8,7 +8,6 @@ from src.model.entity import Actor
 
 
 router = APIRouter(
-    prefix="/actors",
     tags=["actors"],
     dependencies=[],
     responses={404: {"description": "Not found"}},

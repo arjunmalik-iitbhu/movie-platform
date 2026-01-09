@@ -7,7 +7,6 @@ from src.dto import GenreRes, GenreCreateReq
 from src.model.entity import Genre
 
 router = APIRouter(
-    prefix="/genres",
     tags=["genres"],
     dependencies=[],
     responses={404: {"description": "Not found"}},

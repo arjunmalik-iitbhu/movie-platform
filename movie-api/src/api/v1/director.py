@@ -8,7 +8,6 @@ from src.model.entity import Director
 
 
 router = APIRouter(
-    prefix="/directors",
     tags=["directors"],
     dependencies=[],
     responses={404: {"description": "Not found"}},
