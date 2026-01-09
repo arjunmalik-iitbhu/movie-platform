@@ -1,20 +1,31 @@
 <script setup lang="ts">
 import ActionsBar from '@/components/ActionsBar.vue'
+import { useInfoStore } from '@/stores/store'
+import { onMounted } from 'vue';
+import { GENRE } from '@/constants'
 
-defineProps<{
+const props = defineProps<{
   id: string
 }>()
+
+const store = useInfoStore()
+
+onMounted(async () => {
+  store.fetchOne(GENRE, { 'id': Number(props.id) })
+})
+
 </script>
 
 <template>
   <main class="genre">
-    <ActionsBar class="genre-actions" />
-    <h1 class="genre-title">Genre</h1>
+    <ActionsBar class="genre-actions" entity="genre"/>
+    <h1 class="genre-title">{{ store.data[`all${GENRE}s`][id]?.name }}</h1>
+    <h5 class="genre-subtitle">{{ store.data[`all${GENRE}s`][id]?.id }}</h5>
   </main>
 </template>
 
 <style>
-.genres {
+.genre {
   display: flex;
   flex-direction: column;
   flex: 1;

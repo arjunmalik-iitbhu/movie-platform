@@ -1,20 +1,31 @@
 <script setup lang="ts">
 import ActionsBar from '@/components/ActionsBar.vue'
+import { useInfoStore } from '@/stores/store'
+import { onMounted } from 'vue';
+import { DIRECTOR } from '@/constants'
 
-defineProps<{
+const props = defineProps<{
   id: string
 }>()
+
+const store = useInfoStore()
+
+onMounted(async () => {
+  store.fetchOne(DIRECTOR, { 'id': Number(props.id) })
+})
+
 </script>
 
 <template>
   <main class="director">
-    <ActionsBar class="director-actions" />
-    <h1 class="director-title">Director</h1>
+    <ActionsBar class="director-actions" entity="director"/>
+    <h1 class="director-title">{{ store.data[`all${DIRECTOR}s`][id]?.name }}</h1>
+    <h5 class="director-subtitle">{{ store.data[`all${DIRECTOR}s`][id]?.id }}</h5>
   </main>
 </template>
 
 <style>
-.directors {
+.director {
   display: flex;
   flex-direction: column;
   flex: 1;
