@@ -13,6 +13,23 @@ router = APIRouter(
     responses={404: {"description": "Not found"}},
 )
 
+def _get_movie_res(movie: Movie):
+    movie_res = MovieRes(**movie.model_dump())
+    movie_res.genres = [
+        GenreRes(movie_to_genre_row.genre.model_dump())
+        for movie_to_genre_row in movie.movie_to_genre
+        if movie_to_genre_row.genre
+    ]
+    movie_res.actors = [
+        ActorRes(movie_to_actor_row.actor.model_dump())
+        for movie_to_actor_row in movie.movie_to_actor
+        if movie_to_actor_row.actor
+    ]
+    if movie.director:
+        movie_res.director = ActorRes(movie.director.model_dump())
+    movie_res.ratings = [MovieRatingRes(movie_rating_row.model_dump()) for movie_rating_row in movie.movie_rating]
+    return movie_res
+
 
 @router.get("/movies", response_model=list[MovieRes])
 async def read_movies(
@@ -33,34 +50,23 @@ async def read_movies(
         ).offset(offset).limit(limit)
     )
     movies = result.unique().all()
-    movies_res = []
-    for elem in movies:
-        movie: Movie = elem
-        movie_res = MovieRes(**movie.model_dump())
-        movie_res.genres = [
-            GenreRes(movie_to_genre_row.genre.model_dump())
-            for movie_to_genre_row in movie.movie_to_genre
-            if movie_to_genre_row.genre
-        ]
-        movie_res.actors = [
-            ActorRes(movie_to_actor_row.actor.model_dump())
-            for movie_to_actor_row in movie.movie_to_actor
-            if movie_to_actor_row.actor
-        ]
-        if movie.director:
-            movie_res.director = ActorRes(movie.director.model_dump())
-        movie_res.ratings = [MovieRatingRes(movie_rating_row.model_dump()) for movie_rating_row in movie.movie_rating]
-        movies_res.append(movie_res)
-    return movies_res
+    return [_get_movie_res(movie) for movie in movies]
 
 
 @router.get("/movie/{movie_id}", response_model=MovieRes)
 async def read_movie(movie_id: str, session: AsyncSession = Depends(get_session)):
-    result = await session.exec(select(Movie).where(Movie.id == int(movie_id)))
+    result = await session.exec(
+        select(Movie).options(
+            joinedload(Movie.movie_to_genre).joinedload(MovieToGenre.genre),
+            joinedload(Movie.movie_to_actor).joinedload(MovieToActor.actor),
+            joinedload(Movie.director),
+            joinedload(Movie.movie_rating)
+        ).where(Movie.id == int(movie_id))
+    )
     movie = result.first()
     if not movie or not movie.id:
         raise HTTPException(status_code=404, detail=f"Movie {movie_id} not found")
-    return MovieRes(**movie.model_dump())
+    return _get_movie_res(movie)
 
 
 @router.put(
