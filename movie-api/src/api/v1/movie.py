@@ -28,13 +28,13 @@ async def read_movies(
     return [MovieRes(**movie.model_dump()) for movie in movies]
 
 
-@router.get("/movie/{movie_id}", response_model=list[Movie])
+@router.get("/movie/{movie_id}", response_model=MovieRes)
 async def read_movie(movie_id: str, session: AsyncSession = Depends(get_session)):
     result = await session.exec(select(Movie).where(Movie.id == int(movie_id)))
     movie = result.first()
     if not movie or not movie.id:
         raise HTTPException(status_code=404, detail=f"Movie {movie_id} not found")
-    return movie
+    return MovieRes(**movie.model_dump())
 
 
 @router.put(
