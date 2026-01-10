@@ -11,6 +11,8 @@ type SUBENTITY_TYPE = ENTITY_TYPE | typeof MOVIE_RATING;
 
 const SUBENTITIES = [...ENTITIES, MOVIE_RATING] as SUBENTITY_TYPE[];
 
+const ADD_SUBENTITY_DIALOG = "movie-add-subentity-dialog"
+
 const props = defineProps<{
   id: string
 }>()
@@ -21,6 +23,18 @@ const selectedSubentity = ref(MOVIE_RATING)
 
 const selectSubentity = (subentity: SUBENTITY_TYPE) => {
   selectedSubentity.value = subentity;
+}
+
+const addSubEntity = () => {
+  return;
+}
+
+const showSubEntityDialog = () => {
+  (document.getElementsByClassName(ADD_SUBENTITY_DIALOG)[0] as HTMLDialogElement)?.showModal()
+}
+
+const closeSubEntityDialog = () => {
+  (document.getElementsByClassName(ADD_SUBENTITY_DIALOG)[0] as HTMLDialogElement)?.close()
 }
 
 onMounted(async () => {
@@ -48,9 +62,15 @@ onMounted(async () => {
             {{ toTitleCase(`${subentity}s`) }}
           </button>
         </div>
-        <button class="movie-add-subentity">
-          <AddIcon />
-        </button>
+        <div class="movie-add-subentity">
+          <button class="movie-add-subentity-button" v-on:click="showSubEntityDialog">
+            <AddIcon />
+          </button>
+          <dialog class="movie-add-subentity-dialog">
+            <button class="submit" v-on:click="addSubEntity">Submit</button>
+            <button class="close" v-on:click="closeSubEntityDialog">Close</button>
+          </dialog>
+        </div>
       </div>
       <div class="movie-subentity-items">
         <template v-if="selectedSubentity === GENRE">
@@ -166,9 +186,17 @@ onMounted(async () => {
       background-color: var(--color-background-primary-darker);
     }
     .movie-add-subentity {
+      display: flex;
       margin-left: auto;
-      background-color: var(--color-background-soft);
-      border: none;
+      .movie-add-subentity-button {
+        background-color: var(--color-background-soft);
+        border: none;
+        border-radius: 0.5rem;
+        padding: 0.5rem;
+      }
+      button:hover {
+        background-color: var(--color-background-secondary);
+      }
     }
     button:hover {
       cursor: pointer;
