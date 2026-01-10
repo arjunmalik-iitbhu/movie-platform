@@ -51,6 +51,8 @@ onMounted(async () => {
         <button class="movie-add-subentity">
           <AddIcon />
         </button>
+      </div>
+      <div class="movie-subentity-items">
         <template v-if="selectedSubentity === GENRE">
           <div class="movie-subentity-item" v-for="elem in store.data[`all${MOVIE}s`][id]?.genres">
             <img :src="elem.imageSrc || DEFAULT_IMAGE">
@@ -164,6 +166,18 @@ onMounted(async () => {
     button:hover {
       cursor: pointer;
       background-color: var(--color-background-secondary);
+    }
+    .movie-subentity-items {
+      display: flex;
+      flex-direction: column;
+      padding-top: 1rem;
+      .movie-subentity-item {
+        padding-top: 0.5rem;
+        max-height: 10vh;
+        display: flex;
+        flex-direction: row;
+        border-bottom: 1px solid var(--color-primary);
+      }
     }
   }
 }
