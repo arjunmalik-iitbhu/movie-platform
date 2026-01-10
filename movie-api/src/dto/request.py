@@ -41,6 +41,17 @@ class MovieUpdateGenreReq(BaseSchema):
 
     genre_id: Optional[int] = None
 
+class MovieRatingCreateReq(BaseSchema):
+    """
+    Data Transfer Object for creating a new movie.
+    """
+
+    movie_id: int
+    comment: str
+    story: int
+    direction: int
+    acting: int
+
 class ActorCreateReq(BaseSchema):
     """
     Data Transfer Object for creating a new actor.
