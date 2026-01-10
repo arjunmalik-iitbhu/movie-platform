@@ -20,6 +20,7 @@
   --color-text-dark-2: rgba(235, 235, 235, 0.64);
 
   --color-primary: hsla(280, 41%, 41%, 0.455);
+  --color-primary-darker: hsla(280, 45%, 26%, 0.702);
   --color-secondary: hsla(280, 20%, 76%, 0.455);
 }
 
@@ -28,6 +29,7 @@
   --color-background-soft: var(--color-white-soft);
   --color-background-mute: var(--color-white-mute);
   --color-background-primary: var(--color-primary);
+  --color-background-primary-darker: var(--color-primary-darker);
   --color-background-secondary: var(--color-secondary);
 
   --color-border: var(--color-divider-light-2);
@@ -35,6 +37,7 @@
 
   --color-heading: var(--color-text-light-1);
   --color-text: var(--color-text-light-1);
+  --color-text-white: var(--color-white);
   --color-hover: var(--color-secondary);
 
   --section-gap: 160px;

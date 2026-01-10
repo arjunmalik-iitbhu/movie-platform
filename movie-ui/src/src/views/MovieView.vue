@@ -124,7 +124,7 @@ onMounted(async () => {
     padding-top: 1rem;
     padding-bottom: 1rem;
     position: fixed;
-    margin-top: 33vh;
+    margin-top: 34vh;
     margin-left: 5vw;
   }
   .movie-subentity {
@@ -145,12 +145,16 @@ onMounted(async () => {
         padding-right: 2rem;
         font-size: larger;
         border: none;
-        background-color: var(--color-button-unselect);
         border-radius: 2rem;
       }
     }
+    .unselected {
+      color: var(--color-text-white);
+      background-color: var(--color-button-unselect);
+    }
     .selected {
-      background-color: var(--color-background-secondary);
+      color: var(--color-text-white);
+      background-color: var(--color-background-primary-darker);
     }
     .movie-add-subentity {
       margin-left: auto;
