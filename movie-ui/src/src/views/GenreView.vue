@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import ActionsBar from '@/components/ActionsBar.vue'
 import { useInfoStore } from '@/stores/store'
-import { onMounted } from 'vue';
+import { onMounted } from 'vue'
 import { GENRE, DEFAULT_IMAGE } from '@/constants'
 
 const props = defineProps<{
@@ -11,14 +11,13 @@ const props = defineProps<{
 const store = useInfoStore()
 
 onMounted(async () => {
-  store.fetchOne(GENRE, { 'id': Number(props.id) })
+  store.fetchOne(GENRE, { id: Number(props.id) })
 })
-
 </script>
 
 <template>
   <main class="genre">
-    <ActionsBar class="genre-actions" entity="genre"/>
+    <ActionsBar class="genre-actions" entity="genre" />
     <img :src="store.data[`all${GENRE}s`][id]?.imageSrc || DEFAULT_IMAGE" />
     <h1 class="genre-title">{{ store.data[`all${GENRE}s`][id]?.name }}</h1>
     <h5 class="genre-subtitle">{{ store.data[`all${GENRE}s`][id]?.id }}</h5>

@@ -2,18 +2,27 @@
 import { ref } from 'vue'
 import ActionsBar from '@/components/ActionsBar.vue'
 import { useInfoStore } from '@/stores/store'
-import { onMounted } from 'vue';
+import { onMounted } from 'vue'
 import { toTitleCase } from '@/utilities'
 import type { ENTITY_TYPE, Movie, MovieRating } from '@/constants'
-import { MOVIE, DEFAULT_IMAGE, ENTITIES, MOVIE_RATING, GENRE, ACTOR, DIRECTOR, ADD_SUB_ENTITY_FIELDS } from '@/constants'
+import {
+  MOVIE,
+  DEFAULT_IMAGE,
+  ENTITIES,
+  MOVIE_RATING,
+  GENRE,
+  ACTOR,
+  DIRECTOR,
+  ADD_SUB_ENTITY_FIELDS,
+} from '@/constants'
 import AddIcon from '@/components/icons/IconAdd.vue'
 
-const SUBENTITIES = ENTITIES;
+const SUBENTITIES = ENTITIES
 
-type SUBENTITY_TYPE = ENTITY_TYPE;
+type SUBENTITY_TYPE = ENTITY_TYPE
 
-const ADD_SUBENTITY_DIALOG = "movie-add-subentity-dialog"
-const ADD_SUBENTITY_INPUT = "movie-add-subentity-input"
+const ADD_SUBENTITY_DIALOG = 'movie-add-subentity-dialog'
+const ADD_SUBENTITY_INPUT = 'movie-add-subentity-input'
 
 const props = defineProps<{
   id: string
@@ -24,59 +33,54 @@ const store = useInfoStore()
 const selectedSubentity = ref<SUBENTITY_TYPE>(MOVIE_RATING)
 
 const selectSubentity = (subentity: SUBENTITY_TYPE) => {
-  selectedSubentity.value = subentity;
+  selectedSubentity.value = subentity
 }
 
 const addSubEntity = () => {
   if (selectedSubentity.value === MOVIE_RATING) {
     const data = ADD_SUB_ENTITY_FIELDS[MOVIE][selectedSubentity.value].reduce(
-      (c, e) => (
-        Object.assign(
-          c,
-          {
-            [e.name]: (document.getElementsByClassName(`${ADD_SUBENTITY_INPUT}-${e.name}`)[0] as HTMLInputElement)?.value
-          }
-        )
-      ),
-      {'movieId': props.id} as unknown as MovieRating
+      (c, e) =>
+        Object.assign(c, {
+          [e.name]: (
+            document.getElementsByClassName(
+              `${ADD_SUBENTITY_INPUT}-${e.name}`,
+            )[0] as HTMLInputElement
+          )?.value,
+        }),
+      { movieId: props.id } as unknown as MovieRating,
     )
     store.add(MOVIE_RATING, data)
   } else {
-    store.addSubEntity(
-      MOVIE,
-      selectedSubentity.value,
-      {
-        entity_id: Number(props.id),
-        subentity_id: Number(
-          (
-            document.getElementsByClassName(
-              `${ADD_SUBENTITY_INPUT}-${ADD_SUB_ENTITY_FIELDS[MOVIE][selectedSubentity.value][0]?.name}`
-            )[0] as HTMLInputElement
-          )?.value
-        )
-      }
-    )
+    store.addSubEntity(MOVIE, selectedSubentity.value, {
+      entity_id: Number(props.id),
+      subentity_id: Number(
+        (
+          document.getElementsByClassName(
+            `${ADD_SUBENTITY_INPUT}-${ADD_SUB_ENTITY_FIELDS[MOVIE][selectedSubentity.value][0]?.name}`,
+          )[0] as HTMLInputElement
+        )?.value,
+      ),
+    })
   }
   closeSubEntityDialog()
 }
 
 const showSubEntityDialog = () => {
-  (document.getElementsByClassName(ADD_SUBENTITY_DIALOG)[0] as HTMLDialogElement)?.showModal()
+  ;(document.getElementsByClassName(ADD_SUBENTITY_DIALOG)[0] as HTMLDialogElement)?.showModal()
 }
 
 const closeSubEntityDialog = () => {
-  (document.getElementsByClassName(ADD_SUBENTITY_DIALOG)[0] as HTMLDialogElement)?.close()
+  ;(document.getElementsByClassName(ADD_SUBENTITY_DIALOG)[0] as HTMLDialogElement)?.close()
 }
 
 onMounted(async () => {
-  store.fetchOne(MOVIE, { 'id': Number(props.id) })
+  store.fetchOne(MOVIE, { id: Number(props.id) })
 })
-
 </script>
 
 <template>
   <main class="movie">
-    <ActionsBar class="movie-actions" entity="movie"/>
+    <ActionsBar class="movie-actions" entity="movie" />
     <img class="movie-image" :src="store.data[`all${MOVIE}s`][id]?.imageSrc || DEFAULT_IMAGE" />
     <h1 class="movie-title">{{ store.data[`all${MOVIE}s`][id]?.title }}</h1>
     <h5 class="movie-subtitle">{{ store.data[`all${MOVIE}s`][id]?.releaseYear }}</h5>
@@ -85,8 +89,8 @@ onMounted(async () => {
         <div class="movie-subentity-select">
           <button
             class="movie-subentity-select-item"
-            :class="selectedSubentity === subentity ? 'selected': 'unselected'"
-            v-for="subentity in SUBENTITIES.filter(e => e !== MOVIE)"
+            :class="selectedSubentity === subentity ? 'selected' : 'unselected'"
+            v-for="subentity in SUBENTITIES.filter((e) => e !== MOVIE)"
             :key="subentity"
             v-on:click="selectSubentity(subentity)"
           >
@@ -103,7 +107,11 @@ onMounted(async () => {
               v-for="elem in ADD_SUB_ENTITY_FIELDS[MOVIE][selectedSubentity]"
             >
               <p>{{ elem.prettyName }} {{ elem.required ? '' : ' [optional]' }}</p>
-              <input :class="`${ADD_SUBENTITY_INPUT}-${elem.name}`" :type="elem.type" :name="elem.name"/>
+              <input
+                :class="`${ADD_SUBENTITY_INPUT}-${elem.name}`"
+                :type="elem.type"
+                :name="elem.name"
+              />
             </div>
             <div class="movie-add-subentity-buttons">
               <button class="submit" v-on:click="addSubEntity">Submit</button>
@@ -115,7 +123,7 @@ onMounted(async () => {
       <div class="movie-subentity-items">
         <template v-if="selectedSubentity === GENRE">
           <div class="movie-subentity-item" v-for="elem in store.data[`all${MOVIE}s`][id]?.genres">
-            <img :src="elem.imageSrc || DEFAULT_IMAGE">
+            <img :src="elem.imageSrc || DEFAULT_IMAGE" />
             <div class="details">
               <h2>{{ elem.name }}</h2>
               <h4>{{ elem.id }}</h4>
@@ -124,7 +132,7 @@ onMounted(async () => {
         </template>
         <template v-if="selectedSubentity === ACTOR">
           <div class="movie-subentity-item" v-for="elem in store.data[`all${MOVIE}s`][id]?.actors">
-            <img :src="elem.imageSrc || DEFAULT_IMAGE">
+            <img :src="elem.imageSrc || DEFAULT_IMAGE" />
             <div class="details">
               <h2>{{ elem.name }}</h2>
               <h4>{{ elem.id }}</h4>
@@ -133,7 +141,7 @@ onMounted(async () => {
         </template>
         <template v-if="selectedSubentity === DIRECTOR">
           <div class="movie-subentity-item">
-            <img :src="store.data[`all${MOVIE}s`][id]?.director?.imageSrc || DEFAULT_IMAGE">
+            <img :src="store.data[`all${MOVIE}s`][id]?.director?.imageSrc || DEFAULT_IMAGE" />
             <div class="details">
               <h2>{{ store.data[`all${MOVIE}s`][id]?.director?.name }}</h2>
               <h4>{{ store.data[`all${MOVIE}s`][id]?.director?.id }}</h4>
@@ -142,13 +150,16 @@ onMounted(async () => {
         </template>
         <template v-if="selectedSubentity === MOVIE_RATING">
           <div class="movie-subentity-item" v-for="elem in store.data[`all${MOVIE}s`][id]?.ratings">
-            <img :src="DEFAULT_IMAGE">
+            <img :src="DEFAULT_IMAGE" />
             <div class="details">
-              <h2>Story {{ elem.story }}/5 · Direction {{ elem.direction }}/5 · Acting {{ elem.acting }}/5</h2>
+              <h2>
+                Story {{ elem.story }}/5 · Direction {{ elem.direction }}/5 · Acting
+                {{ elem.acting }}/5
+              </h2>
               <h4>{{ elem.comment }}</h4>
             </div>
             <div class="extra-details">
-              {{ "★".repeat(Math.floor((elem.story + elem.direction + elem.acting)/3)) }}
+              {{ '★'.repeat(Math.floor((elem.story + elem.direction + elem.acting) / 3)) }}
             </div>
           </div>
         </template>
@@ -172,7 +183,11 @@ onMounted(async () => {
     border-radius: 2rem;
   }
   .movie-image {
-    background-image: linear-gradient(180deg, var(--color-background), var(--color-background-black));
+    background-image: linear-gradient(
+      180deg,
+      var(--color-background),
+      var(--color-background-black)
+    );
   }
   .movie-actions {
     display: flex;

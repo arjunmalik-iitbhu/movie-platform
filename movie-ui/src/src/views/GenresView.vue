@@ -15,7 +15,7 @@ onMounted(async () => {
 
 <template>
   <main class="genres">
-    <ActionsBar class="genre-actions" entity="genre"/>
+    <ActionsBar class="genre-actions" entity="genre" />
     <h1 class="genre-title">Genres</h1>
     <Filter entity="genre" class="genre-filter" />
     <div class="genre-items">

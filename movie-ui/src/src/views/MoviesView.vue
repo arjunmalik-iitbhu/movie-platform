@@ -15,7 +15,7 @@ onMounted(async () => {
 
 <template>
   <main class="movies">
-    <ActionsBar class="movie-actions" entity="movie"/>
+    <ActionsBar class="movie-actions" entity="movie" />
     <h1 class="movie-title">Movies</h1>
     <Filter entity="movie" class="movie-filter" />
     <div class="movie-items">

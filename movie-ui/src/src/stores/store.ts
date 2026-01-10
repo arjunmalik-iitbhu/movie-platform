@@ -1,6 +1,14 @@
 import { defineStore } from 'pinia'
 import { config } from '../config'
-import type { ENTITY_TYPE, Movie, Genre, Actor, Director, EntityInterface, MovieRating } from '@/constants'
+import type {
+  ENTITY_TYPE,
+  Movie,
+  Genre,
+  Actor,
+  Director,
+  EntityInterface,
+  MovieRating,
+} from '@/constants'
 import { PAGE_LIMIT } from '@/constants'
 
 interface Data {
@@ -104,30 +112,27 @@ export const useInfoStore = defineStore('info', {
       }
       const entities = await resp.json()
       Object.assign(this.data, { [`${entity}s`]: entities })
-      Object.assign(
-        this.data,
-        {
-          [`all${entity}s`]: entities.reduce((c: EntityInterface, e: EntityInterface) => ({...c, [e.id]: e}), {} as EntityInterface)
-        }
-      )
+      Object.assign(this.data, {
+        [`all${entity}s`]: entities.reduce(
+          (c: EntityInterface, e: EntityInterface) => ({ ...c, [e.id]: e }),
+          {} as EntityInterface,
+        ),
+      })
       Object.assign(this.data, {
         [`${entity}smeta`]: { offset: paramsVal.offset, limit: paramsVal.limit },
       })
     },
-    async fetchOne(entity: ENTITY_TYPE, params: {id: number}) {
+    async fetchOne(entity: ENTITY_TYPE, params: { id: number }) {
       const elem = this.data[`all${entity}s`][params.id]
-      if (elem) return elem;
+      if (elem) return elem
       const urlBase = `${config.API_BASE_URL}/version/v1/${entity}/${params.id}`
       const url = new URL(urlBase)
-      const resp = await fetch(url, {method: 'GET', headers: {}})
+      const resp = await fetch(url, { method: 'GET', headers: {} })
       if (!resp.ok) {
         throw new Error(`Error in fetch ${entity}. Response status: ${resp.status}`)
       }
       const fetchElem = await resp.json()
-      Object.assign(
-        this.data,
-        {[`all${entity}s`]: {[fetchElem.id]: fetchElem}}
-      )
+      Object.assign(this.data, { [`all${entity}s`]: { [fetchElem.id]: fetchElem } })
       return fetchElem
     },
     async add(entity: ENTITY_TYPE, data: EntityInterface) {
@@ -142,16 +147,25 @@ export const useInfoStore = defineStore('info', {
         throw new Error(`Error in add ${entity}. Response status: ${resp.status}`)
       }
     },
-    async addSubEntity(entity: ENTITY_TYPE, subentity: ENTITY_TYPE, data: {entity_id: number, subentity_id: number}) {
-      const resp = await fetch(`${config.API_BASE_URL}/version/v1/${entity}/${data.entity_id}/${subentity}`, {
-        method: 'PUT',
-        body: JSON.stringify({[`${subentity}Id`]: data.subentity_id}),
-        headers: {
-          'Content-Type': 'application/json',
+    async addSubEntity(
+      entity: ENTITY_TYPE,
+      subentity: ENTITY_TYPE,
+      data: { entity_id: number; subentity_id: number },
+    ) {
+      const resp = await fetch(
+        `${config.API_BASE_URL}/version/v1/${entity}/${data.entity_id}/${subentity}`,
+        {
+          method: 'PUT',
+          body: JSON.stringify({ [`${subentity}Id`]: data.subentity_id }),
+          headers: {
+            'Content-Type': 'application/json',
+          },
         },
-      })
+      )
       if (!resp.ok) {
-        throw new Error(`Error in add entity ${entity} subentity ${subentity}. Response status: ${resp.status}`)
+        throw new Error(
+          `Error in add entity ${entity} subentity ${subentity}. Response status: ${resp.status}`,
+        )
       }
     },
     toggleNavBar() {

@@ -15,7 +15,7 @@ onMounted(async () => {
 
 <template>
   <main class="directors">
-    <ActionsBar class="director-actions" entity="director"/>
+    <ActionsBar class="director-actions" entity="director" />
     <h1 class="director-title">Directors</h1>
     <Filter entity="director" class="director-filter" />
     <div class="director-items">

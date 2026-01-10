@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import ActionsBar from '@/components/ActionsBar.vue'
 import { useInfoStore } from '@/stores/store'
-import { onMounted } from 'vue';
+import { onMounted } from 'vue'
 import { ACTOR, DEFAULT_IMAGE } from '@/constants'
 
 const props = defineProps<{
@@ -11,14 +11,13 @@ const props = defineProps<{
 const store = useInfoStore()
 
 onMounted(async () => {
-  store.fetchOne(ACTOR, { 'id': Number(props.id) })
+  store.fetchOne(ACTOR, { id: Number(props.id) })
 })
-
 </script>
 
 <template>
   <main class="actor">
-    <ActionsBar class="actor-actions" entity="actor"/>
+    <ActionsBar class="actor-actions" entity="actor" />
     <img :src="store.data[`all${ACTOR}s`][id]?.imageSrc || DEFAULT_IMAGE" />
     <h1 class="actor-title">{{ store.data[`all${ACTOR}s`][id]?.name }}</h1>
     <h5 class="actor-subtitle">{{ store.data[`all${ACTOR}s`][id]?.id }}</h5>

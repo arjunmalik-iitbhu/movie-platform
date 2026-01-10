@@ -7,30 +7,29 @@ import type { ENTITY_TYPE, EntityInterface } from '@/constants'
 import { ADD_ENTITY_FIELDS } from '@/constants'
 import { toTitleCase } from '@/utilities'
 
-const DIALOG_CLASS = "add-entity"
+const DIALOG_CLASS = 'add-entity'
 
 const store = useInfoStore()
 const moreActionsVisible = ref(false)
 
 const props = defineProps<{
-  entity: ENTITY_TYPE,
+  entity: ENTITY_TYPE
 }>()
 
-const getEntityInput = (className: string): string => (
-  (document.getElementsByClassName(className)[0] as HTMLInputElement)?.value || ""
-)
+const getEntityInput = (className: string): string =>
+  (document.getElementsByClassName(className)[0] as HTMLInputElement)?.value || ''
 
 const toggleMoreActions = () => {
   moreActionsVisible.value = !moreActionsVisible.value
 }
 
 const showAddEntity = () => {
-  const elem = (document.getElementsByClassName(DIALOG_CLASS)[0] as HTMLDialogElement)
+  const elem = document.getElementsByClassName(DIALOG_CLASS)[0] as HTMLDialogElement
   elem.showModal()
 }
 
 const closeAddEntity = () => {
-  const elem = (document.getElementsByClassName(DIALOG_CLASS)[0] as HTMLDialogElement)
+  const elem = document.getElementsByClassName(DIALOG_CLASS)[0] as HTMLDialogElement
   elem.close()
 }
 
@@ -38,18 +37,12 @@ const addEntity = () => {
   store.add(
     props.entity,
     ADD_ENTITY_FIELDS[props.entity].reduce(
-      (curr, elem) => (
-        Object.assign(
-          curr,
-          {[elem.name]: getEntityInput(`input-${elem.name}`)}
-        )
-      ),
-      {} as EntityInterface
-    )
+      (curr, elem) => Object.assign(curr, { [elem.name]: getEntityInput(`input-${elem.name}`) }),
+      {} as EntityInterface,
+    ),
   )
   closeAddEntity()
 }
-
 </script>
 
 <template>
@@ -61,26 +54,30 @@ const addEntity = () => {
       <div class="add-action-modal">
         <dialog :class="DIALOG_CLASS">
           <h2>Add {{ toTitleCase(entity) }}</h2>
-          <div class="add-entity-input" v-for="field in ADD_ENTITY_FIELDS[entity]" v-bind:key="field.name">
-            <p>{{ `${field.prettyName}` }} {{ field.required ? '': ' [optional]' }}</p>
-            <input :class="`input-${field.name}`" :type="field.type" :required="field.required"/>
+          <div
+            class="add-entity-input"
+            v-for="field in ADD_ENTITY_FIELDS[entity]"
+            v-bind:key="field.name"
+          >
+            <p>{{ `${field.prettyName}` }} {{ field.required ? '' : ' [optional]' }}</p>
+            <input :class="`input-${field.name}`" :type="field.type" :required="field.required" />
           </div>
           <div class="add-entity-button">
             <button
               class="add-entity-submit-button"
-              :disabled="false && ADD_ENTITY_FIELDS[entity].reduce(
-                (curr, elem) => (
-                  curr || (elem.required && !Boolean(getEntityInput(`input-${elem.name}`)))
-                ),
-                false
-              )"
+              :disabled="
+                false &&
+                ADD_ENTITY_FIELDS[entity].reduce(
+                  (curr, elem) =>
+                    curr || (elem.required && !Boolean(getEntityInput(`input-${elem.name}`))),
+                  false,
+                )
+              "
               v-on:click="addEntity"
             >
               Submit
             </button>
-            <button class="add-entity-close-button" v-on:click="closeAddEntity">
-              Close
-            </button>
+            <button class="add-entity-close-button" v-on:click="closeAddEntity">Close</button>
           </div>
         </dialog>
       </div>

@@ -55,177 +55,183 @@ export type EntityInterface = Movie | Genre | Actor | Director | MovieRating
 
 export const PAGE_LIMIT = 10
 
-export const ADD_ENTITY_FIELDS: Record<ENTITY_TYPE, {prettyName: string, name: string, type: string, required: boolean}[]> = {
+export const ADD_ENTITY_FIELDS: Record<
+  ENTITY_TYPE,
+  { prettyName: string; name: string; type: string; required: boolean }[]
+> = {
   movie: [
     {
-      prettyName: "Title",
-      name: "title",
-      type: "string",
-      required: true
+      prettyName: 'Title',
+      name: 'title',
+      type: 'string',
+      required: true,
     },
     {
-      prettyName: "Release Year",
-      name: "releaseYear",
-      type: "number",
-      required: true
+      prettyName: 'Release Year',
+      name: 'releaseYear',
+      type: 'number',
+      required: true,
     },
     {
-      prettyName: "Image Source",
-      name: "imageSrc",
-      type: "string",
-      required: false
-    }
+      prettyName: 'Image Source',
+      name: 'imageSrc',
+      type: 'string',
+      required: false,
+    },
   ],
   genre: [
     {
-      prettyName: "Name",
-      name: "name",
-      type: "string",
-      required: true
+      prettyName: 'Name',
+      name: 'name',
+      type: 'string',
+      required: true,
     },
     {
-      prettyName: "Image Source",
-      name: "imageSrc",
-      type: "string",
-      required: false
-    }
+      prettyName: 'Image Source',
+      name: 'imageSrc',
+      type: 'string',
+      required: false,
+    },
   ],
   actor: [
     {
-      prettyName: "Name",
-      name: "name",
-      type: "string",
-      required: true
+      prettyName: 'Name',
+      name: 'name',
+      type: 'string',
+      required: true,
     },
     {
-      prettyName: "Image Source",
-      name: "imageSrc",
-      type: "string",
-      required: false
-    }
+      prettyName: 'Image Source',
+      name: 'imageSrc',
+      type: 'string',
+      required: false,
+    },
   ],
   director: [
     {
-      prettyName: "Name",
-      name: "name",
-      type: "string",
-      required: true
+      prettyName: 'Name',
+      name: 'name',
+      type: 'string',
+      required: true,
     },
     {
-      prettyName: "Image Source",
-      name: "imageSrc",
-      type: "string",
-      required: false
-    }
+      prettyName: 'Image Source',
+      name: 'imageSrc',
+      type: 'string',
+      required: false,
+    },
   ],
   rating: [
     {
-      prettyName: "Comment",
-      name: "comment",
-      type: "string",
-      required: true
+      prettyName: 'Comment',
+      name: 'comment',
+      type: 'string',
+      required: true,
     },
     {
-      prettyName: "Story",
-      name: "story",
-      type: "number",
-      required: false
+      prettyName: 'Story',
+      name: 'story',
+      type: 'number',
+      required: false,
     },
     {
-      prettyName: "Direction",
-      name: "direction",
-      type: "number",
-      required: false
+      prettyName: 'Direction',
+      name: 'direction',
+      type: 'number',
+      required: false,
     },
     {
-      prettyName: "Acting",
-      name: "acting",
-      type: "number",
-      required: false
-    }
+      prettyName: 'Acting',
+      name: 'acting',
+      type: 'number',
+      required: false,
+    },
   ],
-};
+}
 
-export const ADD_SUB_ENTITY_FIELDS: Record<ENTITY_TYPE, Record<ENTITY_TYPE, {prettyName: string, name: string, type: string, required: boolean}[]>> = {
+export const ADD_SUB_ENTITY_FIELDS: Record<
+  ENTITY_TYPE,
+  Record<ENTITY_TYPE, { prettyName: string; name: string; type: string; required: boolean }[]>
+> = {
   movie: {
     genre: [
       {
-        prettyName: "Genre Id",
-        name: "genre_id",
-        type: "number",
-        required: true
-      }
+        prettyName: 'Genre Id',
+        name: 'genre_id',
+        type: 'number',
+        required: true,
+      },
     ],
     actor: [
       {
-        prettyName: "Actor Id",
-        name: "actor_id",
-        type: "number",
-        required: true
-      }
+        prettyName: 'Actor Id',
+        name: 'actor_id',
+        type: 'number',
+        required: true,
+      },
     ],
     director: [
       {
-        prettyName: "Director Id",
-        name: "director_id",
-        type: "number",
-        required: true
-      }
+        prettyName: 'Director Id',
+        name: 'director_id',
+        type: 'number',
+        required: true,
+      },
     ],
     rating: [
       {
-        prettyName: "Comment",
-        name: "comment",
-        type: "string",
-        required: true
+        prettyName: 'Comment',
+        name: 'comment',
+        type: 'string',
+        required: true,
       },
       {
-        prettyName: "Story [0-5]",
-        name: "story",
-        type: "number",
-        required: false
+        prettyName: 'Story [0-5]',
+        name: 'story',
+        type: 'number',
+        required: false,
       },
       {
-        prettyName: "Direction [0-5]",
-        name: "direction",
-        type: "number",
-        required: false
+        prettyName: 'Direction [0-5]',
+        name: 'direction',
+        type: 'number',
+        required: false,
       },
       {
-        prettyName: "Acting [0-5]",
-        name: "acting",
-        type: "number",
-        required: false
-      }
+        prettyName: 'Acting [0-5]',
+        name: 'acting',
+        type: 'number',
+        required: false,
+      },
     ],
-    movie: []
+    movie: [],
   },
   genre: {
     genre: [],
     actor: [],
     director: [],
     rating: [],
-    movie: []
+    movie: [],
   },
   actor: {
     genre: [],
     actor: [],
     director: [],
     rating: [],
-    movie: []
+    movie: [],
   },
   director: {
     genre: [],
     actor: [],
     director: [],
     rating: [],
-    movie: []
+    movie: [],
   },
   rating: {
     genre: [],
     actor: [],
     director: [],
     rating: [],
-    movie: []
-  }
-};
+    movie: [],
+  },
+}
