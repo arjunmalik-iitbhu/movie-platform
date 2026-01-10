@@ -118,7 +118,7 @@ onMounted(async () => {
             <img :src="elem.imageSrc || DEFAULT_IMAGE">
             <div class="details">
               <h2>{{ elem.name }}</h2>
-              <h6>{{ elem.id }}</h6>
+              <h4>{{ elem.id }}</h4>
             </div>
           </div>
         </template>
@@ -127,7 +127,7 @@ onMounted(async () => {
             <img :src="elem.imageSrc || DEFAULT_IMAGE">
             <div class="details">
               <h2>{{ elem.name }}</h2>
-              <h6>{{ elem.id }}</h6>
+              <h4>{{ elem.id }}</h4>
             </div>
           </div>
         </template>
@@ -136,7 +136,7 @@ onMounted(async () => {
             <img :src="store.data[`all${MOVIE}s`][id]?.director?.imageSrc || DEFAULT_IMAGE">
             <div class="details">
               <h2>{{ store.data[`all${MOVIE}s`][id]?.director?.name }}</h2>
-              <h6>{{ store.data[`all${MOVIE}s`][id]?.director?.id }}</h6>
+              <h4>{{ store.data[`all${MOVIE}s`][id]?.director?.id }}</h4>
             </div>
           </div>
         </template>
@@ -145,7 +145,7 @@ onMounted(async () => {
             <img :src="DEFAULT_IMAGE">
             <div class="details">
               <h2>Story {{ elem.story }}/5 · Direction {{ elem.direction }}/5 · Acting {{ elem.acting }}/5</h2>
-              <h6>{{ elem.comment }}</h6>
+              <h4>{{ elem.comment }}</h4>
             </div>
             <div class="extra-details">
               {{ "★".repeat(Math.floor((elem.story + elem.direction + elem.acting)/3)) }}
