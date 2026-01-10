@@ -6,7 +6,7 @@ export const ACTOR = 'actor'
 export const DIRECTOR = 'director'
 export const MOVIE_RATING = 'rating'
 
-export const ENTITIES = [MOVIE, GENRE, ACTOR, DIRECTOR] as const
+export const ENTITIES = [MOVIE, GENRE, ACTOR, DIRECTOR, MOVIE_RATING] as const
 
 export type ENTITY_TYPE = (typeof ENTITIES)[number]
 

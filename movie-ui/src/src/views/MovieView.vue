@@ -7,9 +7,9 @@ import { toTitleCase } from '@/utilities'
 import { MOVIE, DEFAULT_IMAGE, ENTITIES, MOVIE_RATING, type ENTITY_TYPE, GENRE, ACTOR, DIRECTOR } from '@/constants'
 import AddIcon from '@/components/icons/IconAdd.vue'
 
-type SUBENTITY_TYPE = ENTITY_TYPE | typeof MOVIE_RATING;
+type SUBENTITY_TYPE = ENTITY_TYPE;
 
-const SUBENTITIES = [...ENTITIES, MOVIE_RATING] as SUBENTITY_TYPE[];
+const SUBENTITIES = [...ENTITIES] as SUBENTITY_TYPE[];
 
 const ADD_SUBENTITY_DIALOG = "movie-add-subentity-dialog"
 

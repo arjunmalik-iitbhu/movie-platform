@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { config } from '../config'
-import type { ENTITY_TYPE, Movie, Genre, Actor, Director, EntityInterface } from '@/constants'
+import type { ENTITY_TYPE, Movie, Genre, Actor, Director, EntityInterface, MovieRating } from '@/constants'
 import { PAGE_LIMIT } from '@/constants'
 
 interface Data {
@@ -25,6 +25,12 @@ interface Data {
   alldirectors: Record<string, Director>
   directors: Director[]
   directorsmeta: {
+    offset: number
+    limit: number
+  }
+  allratings: Record<string, MovieRating>
+  ratings: MovieRating[]
+  ratingsmeta: {
     offset: number
     limit: number
   }
@@ -58,6 +64,9 @@ export const useInfoStore = defineStore('info', {
         alldirectors: {},
         directors: [],
         directorsmeta: { offset: 0, limit: PAGE_LIMIT },
+        allratings: {},
+        ratings: [],
+        ratingsmeta: { offset: 0, limit: PAGE_LIMIT },
       },
     }
   },
