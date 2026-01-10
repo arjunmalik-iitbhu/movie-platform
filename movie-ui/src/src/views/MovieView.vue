@@ -148,7 +148,7 @@ onMounted(async () => {
               <h6>{{ elem.comment }}</h6>
             </div>
             <div class="extra-details">
-              {{ "★".repeat(Math.floor((elem.story + elem.direction + elem.acting)/15)) }}
+              {{ "★".repeat(Math.floor((elem.story + elem.direction + elem.acting)/3)) }}
             </div>
           </div>
         </template>
@@ -272,12 +272,26 @@ onMounted(async () => {
       flex-direction: column;
       padding-top: 1rem;
       .movie-subentity-item {
-        padding-top: 0.5rem;
-        max-height: 10vh;
         display: flex;
         flex-direction: row;
+        justify-content: flex-start;
         border-bottom: 1px solid var(--color-primary);
-        gap: 1rem;
+        gap: 2rem;
+        padding-top: 0.5rem;
+        width: 100%;
+        img {
+          display: flex;
+          height: 10rem;
+        }
+        .details {
+          display: flex;
+          flex-direction: column;
+          flex: 1;
+        }
+        .extra-details {
+          display: flex;
+          font-size: xx-large;
+        }
       }
     }
   }
