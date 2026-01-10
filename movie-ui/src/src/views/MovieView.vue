@@ -139,7 +139,9 @@ onMounted(async () => {
             </div>
           </div>
         </template>
-        <template v-if="selectedSubentity === DIRECTOR && store.data[`all${MOVIE}s`][id]?.director?.id">
+        <template
+          v-if="selectedSubentity === DIRECTOR && store.data[`all${MOVIE}s`][id]?.director?.id"
+        >
           <div class="movie-subentity-item">
             <img :src="store.data[`all${MOVIE}s`][id]?.director?.imageSrc || DEFAULT_IMAGE" />
             <div class="details">
