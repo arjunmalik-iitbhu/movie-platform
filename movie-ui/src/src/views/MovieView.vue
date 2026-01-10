@@ -32,7 +32,7 @@ onMounted(async () => {
 <template>
   <main class="movie">
     <ActionsBar class="movie-actions" entity="movie"/>
-    <img :src="store.data[`all${MOVIE}s`][id]?.imageSrc || DEFAULT_IMAGE" />
+    <img class="movie-image" :src="store.data[`all${MOVIE}s`][id]?.imageSrc || DEFAULT_IMAGE" />
     <h1 class="movie-title">{{ store.data[`all${MOVIE}s`][id]?.title }}</h1>
     <h5 class="movie-subtitle">{{ store.data[`all${MOVIE}s`][id]?.releaseYear }}</h5>
     <div class="movie-subentity">
@@ -111,6 +111,9 @@ onMounted(async () => {
     border: 1px solid var(--color-border);
     border-radius: 2rem;
   }
+  .movie-image {
+    background-image: linear-gradient(180deg, var(--color-background), var(--color-background-black));
+  }
   .movie-actions {
     display: flex;
     justify-content: flex-end;
@@ -119,8 +122,10 @@ onMounted(async () => {
     padding-top: 1rem;
     padding-bottom: 1rem;
     position: fixed;
-    margin-top: 30vh;
+    margin-top: 25vh;
     margin-left: 5vw;
+    color: var(--color-text-white);
+    font-size: 5rem;
   }
   .movie-subtitle {
     padding-top: 1rem;
@@ -128,6 +133,8 @@ onMounted(async () => {
     position: fixed;
     margin-top: 34vh;
     margin-left: 5vw;
+    color: var(--color-text-white);
+    font-size: 1rem;
   }
   .movie-subentity {
     display: flex;
@@ -177,6 +184,7 @@ onMounted(async () => {
         display: flex;
         flex-direction: row;
         border-bottom: 1px solid var(--color-primary);
+        gap: 1rem;
       }
     }
   }
