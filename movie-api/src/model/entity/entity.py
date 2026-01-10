@@ -12,6 +12,7 @@ from sqlalchemy import (
     String,
     Text,
     text,
+    UniqueConstraint
 )
 from sqlmodel import Field, Relationship, SQLModel
 
@@ -20,6 +21,7 @@ class Actor(SQLModel, table=True):
     __table_args__ = (
         CheckConstraint("name::text <> ''::text", name="actor_name_check"),
         PrimaryKeyConstraint("id", name="actor_primary_key"),
+        UniqueConstraint("name", name="actor_unique_name"),
     )
 
     id: int = Field(sa_column=Column("id", BigInteger, primary_key=True))
@@ -48,6 +50,7 @@ class Director(SQLModel, table=True):
     __table_args__ = (
         CheckConstraint("name::text <> ''::text", name="director_name_check"),
         PrimaryKeyConstraint("id", name="director_primary_key"),
+        UniqueConstraint("name", name="director_unique_name"),
     )
 
     id: int = Field(sa_column=Column("id", BigInteger, primary_key=True))
@@ -76,6 +79,7 @@ class Genre(SQLModel, table=True):
     __table_args__ = (
         CheckConstraint("name::text <> ''::text", name="genre_name_check"),
         PrimaryKeyConstraint("id", name="genre_primary_key"),
+        UniqueConstraint("name", name="genre_unique_name"),
     )
 
     id: int = Field(sa_column=Column("id", BigInteger, primary_key=True))
@@ -111,6 +115,7 @@ class Movie(SQLModel, table=True):
             name="movie_foreign_key_director_id",
         ),
         PrimaryKeyConstraint("id", name="movie_primary_key"),
+        UniqueConstraint("title", name="movie_unique_title"),
     )
 
     id: int = Field(sa_column=Column("id", BigInteger, primary_key=True))
@@ -211,6 +216,7 @@ class MovieToActor(SQLModel, table=True):
             name="movie_to_actor_foreign_key_movie_id",
         ),
         PrimaryKeyConstraint("id", name="movie_to_actor_primary_key"),
+        UniqueConstraint("movie_id", "actor_id", name="movie_to_actor_unique_movie_id_actor_id"),
     )
 
     id: int = Field(sa_column=Column("id", BigInteger, primary_key=True))
@@ -255,6 +261,7 @@ class MovieToGenre(SQLModel, table=True):
             name="movie_to_genre_foreign_key_movie_id",
         ),
         PrimaryKeyConstraint("id", name="movie_to_genre_primary_key"),
+        UniqueConstraint("movie_id", "genre_id", name="movie_to_genre_unique_movie_id_genre_id"),
     )
 
     id: int = Field(sa_column=Column("id", BigInteger, primary_key=True))
