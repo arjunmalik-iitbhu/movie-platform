@@ -29,20 +29,18 @@ const selectSubentity = (subentity: SUBENTITY_TYPE) => {
 
 const addSubEntity = () => {
   if (selectedSubentity.value === MOVIE_RATING) {
-    store.add(
-      MOVIE_RATING,
-      ADD_SUB_ENTITY_FIELDS[MOVIE][selectedSubentity.value].reduce(
-        (c, e) => (
-          Object.assign(
-            c,
-            {
-              [e.name]: (document.getElementsByClassName(`${ADD_SUBENTITY_INPUT}-${e.name}`)[0] as HTMLInputElement)?.value
-            }
-          )
-        ),
-        {'movieId': props.id} as unknown as MovieRating
-      )
-    );
+    const data = ADD_SUB_ENTITY_FIELDS[MOVIE][selectedSubentity.value].reduce(
+      (c, e) => (
+        Object.assign(
+          c,
+          {
+            [e.name]: (document.getElementsByClassName(`${ADD_SUBENTITY_INPUT}-${e.name}`)[0] as HTMLInputElement)?.value
+          }
+        )
+      ),
+      {'movieId': props.id} as unknown as MovieRating
+    )
+    store.add(MOVIE_RATING, data)
   } else {
     store.addSubEntity(
       MOVIE,
@@ -57,7 +55,7 @@ const addSubEntity = () => {
           )?.value
         )
       }
-    );
+    )
   }
   closeSubEntityDialog()
 }
@@ -101,12 +99,11 @@ onMounted(async () => {
           </button>
           <dialog class="movie-add-subentity-dialog">
             <div
-              :class="`${ADD_SUBENTITY_INPUT}-${elem.name}`"
               class="movie-add-subentity-input"
               v-for="elem in ADD_SUB_ENTITY_FIELDS[MOVIE][selectedSubentity]"
             >
               <p>{{ elem.prettyName }} {{ elem.required ? '' : ' [optional]' }}</p>
-              <input :type="elem.type" :name="elem.name"/>
+              <input :class="`${ADD_SUBENTITY_INPUT}-${elem.name}`" :type="elem.type" :name="elem.name"/>
             </div>
             <div class="movie-add-subentity-buttons">
               <button class="submit" v-on:click="addSubEntity">Submit</button>
