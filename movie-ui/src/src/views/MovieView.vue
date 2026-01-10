@@ -197,6 +197,10 @@ onMounted(async () => {
       button:hover {
         background-color: var(--color-background-secondary);
       }
+      .movie-add-subentity-dialog {
+        top: 40vh;
+        left: 45vw;
+      }
     }
     button:hover {
       cursor: pointer;

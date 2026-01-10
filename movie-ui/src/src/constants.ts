@@ -53,3 +53,94 @@ export interface Director {
 export type EntityInterface = Movie | Genre | Actor | Director
 
 export const PAGE_LIMIT = 10
+
+export const ADD_ENTITY_FIELDS: Record<ENTITY_TYPE, {prettyName: string, name: string, type: string, required: boolean}[]> = {
+  movie: [
+    {
+      prettyName: "Title",
+      name: "title",
+      type: "string",
+      required: true
+    },
+    {
+      prettyName: "Release Year",
+      name: "releaseYear",
+      type: "number",
+      required: true
+    },
+    {
+      prettyName: "Image Source",
+      name: "imageSrc",
+      type: "string",
+      required: false
+    }
+  ],
+  genre: [
+    {
+      prettyName: "Name",
+      name: "name",
+      type: "string",
+      required: true
+    },
+    {
+      prettyName: "Image Source",
+      name: "imageSrc",
+      type: "string",
+      required: false
+    }
+  ],
+  actor: [
+    {
+      prettyName: "Name",
+      name: "name",
+      type: "string",
+      required: true
+    },
+    {
+      prettyName: "Image Source",
+      name: "imageSrc",
+      type: "string",
+      required: false
+    }
+  ],
+  director: [
+    {
+      prettyName: "Name",
+      name: "name",
+      type: "string",
+      required: true
+    },
+    {
+      prettyName: "Image Source",
+      name: "imageSrc",
+      type: "string",
+      required: false
+    }
+  ],
+  rating: [
+    {
+      prettyName: "Comment",
+      name: "comment",
+      type: "string",
+      required: true
+    },
+    {
+      prettyName: "Story",
+      name: "story",
+      type: "number",
+      required: false
+    },
+    {
+      prettyName: "Direction",
+      name: "direction",
+      type: "number",
+      required: false
+    },
+    {
+      prettyName: "Acting",
+      name: "acting",
+      type: "number",
+      required: false
+    }
+  ],
+};

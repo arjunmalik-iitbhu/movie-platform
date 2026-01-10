@@ -4,74 +4,10 @@ import { useInfoStore } from '@/stores/store'
 import AddIcon from '@/components/icons/IconAdd.vue'
 import MoreVertIcon from '@/components/icons/IconMoreVert.vue'
 import type { ENTITY_TYPE, EntityInterface } from '@/constants'
+import { ADD_ENTITY_FIELDS } from '@/constants'
 import { toTitleCase } from '@/utilities'
 
 const DIALOG_CLASS = "add-entity"
-
-const ADD_ENTITY_FIELDS: Record<ENTITY_TYPE, {prettyName: string, name: string, type: string, required: boolean}[]> = {
-  movie: [
-    {
-      prettyName: "Title",
-      name: "title",
-      type: "string",
-      required: true
-    },
-    {
-      prettyName: "Release Year",
-      name: "releaseYear",
-      type: "number",
-      required: true
-    },
-    {
-      prettyName: "Image Source",
-      name: "imageSrc",
-      type: "string",
-      required: false
-    }
-  ],
-  genre: [
-    {
-      prettyName: "Name",
-      name: "name",
-      type: "string",
-      required: true
-    },
-    {
-      prettyName: "Image Source",
-      name: "imageSrc",
-      type: "string",
-      required: false
-    }
-  ],
-  actor: [
-    {
-      prettyName: "Name",
-      name: "name",
-      type: "string",
-      required: true
-    },
-    {
-      prettyName: "Image Source",
-      name: "imageSrc",
-      type: "string",
-      required: false
-    }
-  ],
-  director: [
-    {
-      prettyName: "Name",
-      name: "name",
-      type: "string",
-      required: true
-    },
-    {
-      prettyName: "Image Source",
-      name: "imageSrc",
-      type: "string",
-      required: false
-    }
-  ],
-};
 
 const store = useInfoStore()
 const moreActionsVisible = ref(false)
