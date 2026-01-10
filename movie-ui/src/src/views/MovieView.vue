@@ -68,12 +68,14 @@ onMounted(async () => {
             <AddIcon />
           </button>
           <dialog class="movie-add-subentity-dialog">
-            <div class="movie-add-subentity-input" v-for="elem in ADD_SUB_ENTITY_FIELDS[MOVIE][selectedSubentity]">
-              {{ elem.prettyName }} {{ elem.required ? '' : ' [optional]' }}
-              <input :type="elem.type" :name="elem.name"/>
+              <div class="movie-add-subentity-input" v-for="elem in ADD_SUB_ENTITY_FIELDS[MOVIE][selectedSubentity]">
+                <p>{{ elem.prettyName }} {{ elem.required ? '' : ' [optional]' }}</p>
+                <input :type="elem.type" :name="elem.name"/>
+              </div>
+            <div class="movie-add-subentity-buttons">
+              <button class="submit" v-on:click="addSubEntity">Submit</button>
+              <button class="close" v-on:click="closeSubEntityDialog">Close</button>
             </div>
-            <button class="submit" v-on:click="addSubEntity">Submit</button>
-            <button class="close" v-on:click="closeSubEntityDialog">Close</button>
           </dialog>
         </div>
       </div>
@@ -205,6 +207,25 @@ onMounted(async () => {
       .movie-add-subentity-dialog {
         top: 40vh;
         left: 45vw;
+        padding: 1rem;
+        .movie-add-subentity-input {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+        .movie-add-subentity-buttons {
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          gap: 1rem;
+          padding: 1rem;
+          button {
+            display: flex;
+            border: none;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+          }
+        }
       }
     }
     button:hover {
