@@ -16,6 +16,7 @@ export interface MovieRating {
   story: number
   direction: number
   acting: number
+  movieId: number
 }
 
 export interface Movie {
@@ -50,7 +51,7 @@ export interface Director {
   movies?: Movie[]
 }
 
-export type EntityInterface = Movie | Genre | Actor | Director
+export type EntityInterface = Movie | Genre | Actor | Director | MovieRating
 
 export const PAGE_LIMIT = 10
 
@@ -171,7 +172,32 @@ export const ADD_SUB_ENTITY_FIELDS: Record<ENTITY_TYPE, Record<ENTITY_TYPE, {pre
         required: true
       }
     ],
-    rating: [],
+    rating: [
+      {
+        prettyName: "Comment",
+        name: "comment",
+        type: "string",
+        required: true
+      },
+      {
+        prettyName: "Story [0-5]",
+        name: "story",
+        type: "number",
+        required: false
+      },
+      {
+        prettyName: "Direction [0-5]",
+        name: "direction",
+        type: "number",
+        required: false
+      },
+      {
+        prettyName: "Acting [0-5]",
+        name: "acting",
+        type: "number",
+        required: false
+      }
+    ],
     movie: []
   },
   genre: {

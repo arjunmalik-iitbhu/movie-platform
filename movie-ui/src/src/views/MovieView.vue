@@ -4,7 +4,7 @@ import ActionsBar from '@/components/ActionsBar.vue'
 import { useInfoStore } from '@/stores/store'
 import { onMounted } from 'vue';
 import { toTitleCase } from '@/utilities'
-import {type ENTITY_TYPE } from '@/constants'
+import type { ENTITY_TYPE, Movie, MovieRating } from '@/constants'
 import { MOVIE, DEFAULT_IMAGE, ENTITIES, MOVIE_RATING, GENRE, ACTOR, DIRECTOR, ADD_SUB_ENTITY_FIELDS } from '@/constants'
 import AddIcon from '@/components/icons/IconAdd.vue'
 
@@ -13,6 +13,7 @@ const SUBENTITIES = ENTITIES;
 type SUBENTITY_TYPE = ENTITY_TYPE;
 
 const ADD_SUBENTITY_DIALOG = "movie-add-subentity-dialog"
+const ADD_SUBENTITY_INPUT = "movie-add-subentity-input"
 
 const props = defineProps<{
   id: string
@@ -27,7 +28,38 @@ const selectSubentity = (subentity: SUBENTITY_TYPE) => {
 }
 
 const addSubEntity = () => {
-  return;
+  if (selectedSubentity.value === MOVIE_RATING) {
+    store.add(
+      MOVIE_RATING,
+      ADD_SUB_ENTITY_FIELDS[MOVIE][selectedSubentity.value].reduce(
+        (c, e) => (
+          Object.assign(
+            c,
+            {
+              [e.name]: (document.getElementsByClassName(`${ADD_SUBENTITY_INPUT}-${e.name}`)[0] as HTMLInputElement)?.value
+            }
+          )
+        ),
+        {'movieId': props.id} as unknown as MovieRating
+      )
+    );
+  } else {
+    store.addSubEntity(
+      MOVIE,
+      selectedSubentity.value,
+      {
+        entity_id: Number(props.id),
+        subentity_id: Number(
+          (
+            document.getElementsByClassName(
+              `${ADD_SUBENTITY_INPUT}-${ADD_SUB_ENTITY_FIELDS[MOVIE][selectedSubentity.value][0]?.name}`
+            )[0] as HTMLInputElement
+          )?.value
+        )
+      }
+    );
+  }
+  closeSubEntityDialog()
 }
 
 const showSubEntityDialog = () => {
@@ -68,10 +100,14 @@ onMounted(async () => {
             <AddIcon />
           </button>
           <dialog class="movie-add-subentity-dialog">
-              <div class="movie-add-subentity-input" v-for="elem in ADD_SUB_ENTITY_FIELDS[MOVIE][selectedSubentity]">
-                <p>{{ elem.prettyName }} {{ elem.required ? '' : ' [optional]' }}</p>
-                <input :type="elem.type" :name="elem.name"/>
-              </div>
+            <div
+              :class="`${ADD_SUBENTITY_INPUT}-${elem.name}`"
+              class="movie-add-subentity-input"
+              v-for="elem in ADD_SUB_ENTITY_FIELDS[MOVIE][selectedSubentity]"
+            >
+              <p>{{ elem.prettyName }} {{ elem.required ? '' : ' [optional]' }}</p>
+              <input :type="elem.type" :name="elem.name"/>
+            </div>
             <div class="movie-add-subentity-buttons">
               <button class="submit" v-on:click="addSubEntity">Submit</button>
               <button class="close" v-on:click="closeSubEntityDialog">Close</button>
@@ -205,13 +241,15 @@ onMounted(async () => {
         background-color: var(--color-background-secondary);
       }
       .movie-add-subentity-dialog {
-        top: 40vh;
+        top: 30vh;
         left: 45vw;
         padding: 1rem;
         .movie-add-subentity-input {
           display: flex;
           flex-direction: column;
           align-items: center;
+          padding: 1rem;
+          gap: 0.5rem;
         }
         .movie-add-subentity-buttons {
           display: flex;

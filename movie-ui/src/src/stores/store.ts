@@ -142,6 +142,18 @@ export const useInfoStore = defineStore('info', {
         throw new Error(`Error in add ${entity}. Response status: ${resp.status}`)
       }
     },
+    async addSubEntity(entity: ENTITY_TYPE, subentity: ENTITY_TYPE, data: {entity_id: number, subentity_id: number}) {
+      const resp = await fetch(`${config.API_BASE_URL}/version/v1/${entity}/${data.entity_id}/${subentity}`, {
+        method: 'PUT',
+        body: JSON.stringify({[`${subentity}Id`]: data.subentity_id}),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      if (!resp.ok) {
+        throw new Error(`Error in add entity ${entity} subentity ${subentity}. Response status: ${resp.status}`)
+      }
+    },
     toggleNavBar() {
       this.settings.navBarVisible = !this.settings.navBarVisible
     },
