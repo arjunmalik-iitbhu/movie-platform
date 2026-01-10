@@ -1,10 +1,20 @@
 from typing import Optional
 from fastapi import APIRouter, HTTPException, Depends, status
 from sqlmodel.ext.asyncio.session import AsyncSession
-from sqlmodel import select
+from sqlmodel import select, update, insert
 from sqlalchemy.orm import joinedload
 from src.deps import get_session
-from src.dto import MovieRes, MovieCreateReq, GenreRes, ActorRes, DirectorRes, MovieRatingRes
+from src.dto import (
+    MovieRes,
+    MovieCreateReq,
+    GenreRes,
+    ActorRes,
+    DirectorRes,
+    MovieRatingRes,
+    MovieUpdateDirectorReq,
+    MovieUpdateActorReq,
+    MovieUpdateGenreReq
+)
 from src.model.entity import Movie, MovieToGenre, MovieToActor
 
 router = APIRouter(
@@ -70,12 +80,46 @@ async def read_movie(movie_id: str, session: AsyncSession = Depends(get_session)
 
 
 @router.put(
-    "/movie/{movie_id}",
+    "/movie/{movie_id}/director",
     responses={403: {"description": "Operation forbidden"}},
 )
-async def update_movie(movie_id: str, session: AsyncSession = Depends(get_session)):
-    return HTTPException(status_code=403, detail=f"Operation forbidden")
+async def update_movie_director(
+    movie_id: str,
+    movieReq: MovieUpdateDirectorReq,
+    session: AsyncSession = Depends(get_session)
+):
+    await session.exec(
+        update(Movie).where(Movie.movie_id == movie_id).values(director_id=f"{movieReq.director_id}")
+    )
+    return movie_id
 
+@router.put(
+    "/movie/{movie_id}/actor",
+    responses={403: {"description": "Operation forbidden"}},
+)
+async def update_movie_actor(
+    movie_id: str,
+    movieReq: MovieUpdateActorReq,
+    session: AsyncSession = Depends(get_session)
+):
+    await session.exec(
+        insert(MovieToActor).values(movie_id=movie_id, actor_id=movieReq.actor_id)
+    )
+    return movie_id
+
+@router.put(
+    "/movie/{movie_id}/genre",
+    responses={403: {"description": "Operation forbidden"}},
+)
+async def update_movie_genre(
+    movie_id: str,
+    movieReq: MovieUpdateGenreReq,
+    session: AsyncSession = Depends(get_session)
+):
+    await session.exec(
+        insert(MovieToGenre).values(movie_id=movie_id, genre_id=movieReq.genre_id)
+    )
+    return movie_id
 
 @router.post("/movie", response_model=Movie, status_code=status.HTTP_201_CREATED)
 async def create_movie(movieReq: MovieCreateReq, session: AsyncSession = Depends(get_session)):
