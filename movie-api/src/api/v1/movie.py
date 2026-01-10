@@ -100,9 +100,10 @@ async def update_movie_director(
 ):
     await session.exec(
         update(Movie)
-        .where(Movie.movie_id == int(movie_id))
-        .values(director_id=f"{movieReq.director_id}")
+        .where(Movie.id == int(movie_id))
+        .values(director_id=movieReq.director_id)
     )
+    await session.commit()
     return movie_id
 
 
@@ -118,6 +119,7 @@ async def update_movie_actor(
     await session.exec(
         insert(MovieToActor).values(movie_id=int(movie_id), actor_id=movieReq.actor_id)
     )
+    await session.commit()
     return movie_id
 
 
@@ -133,6 +135,7 @@ async def update_movie_genre(
     await session.exec(
         insert(MovieToGenre).values(movie_id=int(movie_id), genre_id=movieReq.genre_id)
     )
+    await session.commit()
     return movie_id
 
 
