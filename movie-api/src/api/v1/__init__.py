@@ -1,4 +1,5 @@
 from fastapi import APIRouter
+
 from . import actor, director, genre, movie, movie_rating
 
 router = APIRouter(

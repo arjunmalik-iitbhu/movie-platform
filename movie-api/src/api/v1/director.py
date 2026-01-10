@@ -1,17 +1,18 @@
 from typing import Optional
-from fastapi import APIRouter, HTTPException, Depends, status
-from sqlmodel.ext.asyncio.session import AsyncSession
-from sqlmodel import select
-from src.deps import get_session
-from src.dto import DirectorRes, DirectorCreateReq
-from src.model.entity import Director
 
+from fastapi import APIRouter, Depends, HTTPException, status
+from sqlmodel import select
+from sqlmodel.ext.asyncio.session import AsyncSession
+from src.deps import get_session
+from src.dto import DirectorCreateReq, DirectorRes
+from src.model.entity import Director
 
 router = APIRouter(
     tags=["directors"],
     dependencies=[],
     responses={404: {"description": "Not found"}},
 )
+
 
 @router.get("/directors", response_model=list[DirectorRes])
 async def read_directors(
@@ -41,12 +42,16 @@ async def read_director(director_id: str, session: AsyncSession = Depends(get_se
     "/director/{director_id}",
     responses={403: {"description": "Operation forbidden"}},
 )
-async def update_director(director_id: str, session: AsyncSession = Depends(get_session)):
+async def update_director(
+    director_id: str, session: AsyncSession = Depends(get_session)
+):
     return HTTPException(status_code=403, detail=f"Operation forbidden")
 
 
 @router.post("/director", response_model=Director, status_code=status.HTTP_201_CREATED)
-async def create_director(directorReq: DirectorCreateReq, session: AsyncSession = Depends(get_session)):
+async def create_director(
+    directorReq: DirectorCreateReq, session: AsyncSession = Depends(get_session)
+):
     director = Director(**directorReq.model_dump(by_alias=False))
     session.add(director)
     await session.commit()

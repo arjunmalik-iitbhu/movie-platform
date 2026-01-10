@@ -1,14 +1,14 @@
-from pydantic import BaseModel, ConfigDict
 from typing import Optional
+
+from pydantic import BaseModel, ConfigDict
 from pydantic.alias_generators import to_camel
 
 
 class BaseSchema(BaseModel):
     model_config = ConfigDict(
-        alias_generator=to_camel,
-        populate_by_name=True,
-        from_attributes=True
+        alias_generator=to_camel, populate_by_name=True, from_attributes=True
     )
+
 
 class ActorRes(BaseSchema):
     """
@@ -18,6 +18,7 @@ class ActorRes(BaseSchema):
     id: int
     name: str
 
+
 class DirectorRes(BaseSchema):
     """
     Data Transfer Object for returning a director.
@@ -26,6 +27,7 @@ class DirectorRes(BaseSchema):
     id: int
     name: str
 
+
 class GenreRes(BaseSchema):
     """
     Data Transfer Object for returning a genre.
@@ -33,6 +35,7 @@ class GenreRes(BaseSchema):
 
     id: int
     name: str
+
 
 class MovieRatingRes(BaseSchema):
     """
@@ -44,6 +47,7 @@ class MovieRatingRes(BaseSchema):
     story: int
     direction: int
     acting: int
+
 
 class MovieRes(BaseSchema):
     """

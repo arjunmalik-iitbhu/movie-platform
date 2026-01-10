@@ -1,5 +1,5 @@
-from typing import Optional
 import datetime
+from typing import Optional
 
 from sqlalchemy import (
     BigInteger,
@@ -11,8 +11,8 @@ from sqlalchemy import (
     PrimaryKeyConstraint,
     String,
     Text,
+    UniqueConstraint,
     text,
-    UniqueConstraint
 )
 from sqlmodel import Field, Relationship, SQLModel
 
@@ -216,7 +216,9 @@ class MovieToActor(SQLModel, table=True):
             name="movie_to_actor_foreign_key_movie_id",
         ),
         PrimaryKeyConstraint("id", name="movie_to_actor_primary_key"),
-        UniqueConstraint("movie_id", "actor_id", name="movie_to_actor_unique_movie_id_actor_id"),
+        UniqueConstraint(
+            "movie_id", "actor_id", name="movie_to_actor_unique_movie_id_actor_id"
+        ),
     )
 
     id: int = Field(sa_column=Column("id", BigInteger, primary_key=True))
@@ -261,7 +263,9 @@ class MovieToGenre(SQLModel, table=True):
             name="movie_to_genre_foreign_key_movie_id",
         ),
         PrimaryKeyConstraint("id", name="movie_to_genre_primary_key"),
-        UniqueConstraint("movie_id", "genre_id", name="movie_to_genre_unique_movie_id_genre_id"),
+        UniqueConstraint(
+            "movie_id", "genre_id", name="movie_to_genre_unique_movie_id_genre_id"
+        ),
     )
 
     id: int = Field(sa_column=Column("id", BigInteger, primary_key=True))

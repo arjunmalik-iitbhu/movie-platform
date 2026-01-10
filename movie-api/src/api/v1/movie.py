@@ -1,27 +1,29 @@
 from typing import Optional
-from fastapi import APIRouter, HTTPException, Depends, status
-from sqlmodel.ext.asyncio.session import AsyncSession
-from sqlmodel import select, update, insert
+
+from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import joinedload
+from sqlmodel import insert, select, update
+from sqlmodel.ext.asyncio.session import AsyncSession
 from src.deps import get_session
 from src.dto import (
-    MovieRes,
-    MovieCreateReq,
-    GenreRes,
     ActorRes,
     DirectorRes,
+    GenreRes,
+    MovieCreateReq,
     MovieRatingRes,
-    MovieUpdateDirectorReq,
+    MovieRes,
     MovieUpdateActorReq,
-    MovieUpdateGenreReq
+    MovieUpdateDirectorReq,
+    MovieUpdateGenreReq,
 )
-from src.model.entity import Movie, MovieToGenre, MovieToActor
+from src.model.entity import Movie, MovieToActor, MovieToGenre
 
 router = APIRouter(
     tags=["movies"],
     dependencies=[],
     responses={404: {"description": "Not found"}},
 )
+
 
 def _get_movie_res(movie: Movie):
     movie_res = MovieRes(**movie.model_dump())
@@ -37,7 +39,10 @@ def _get_movie_res(movie: Movie):
     ]
     if movie.director:
         movie_res.director = DirectorRes(**movie.director.model_dump())
-    movie_res.ratings = [MovieRatingRes(**movie_rating_row.model_dump()) for movie_rating_row in movie.movie_rating]
+    movie_res.ratings = [
+        MovieRatingRes(**movie_rating_row.model_dump())
+        for movie_rating_row in movie.movie_rating
+    ]
     return movie_res
 
 
@@ -52,12 +57,15 @@ async def read_movies(
     session: AsyncSession = Depends(get_session),
 ):
     result = await session.exec(
-        select(Movie).options(
+        select(Movie)
+        .options(
             joinedload(Movie.movie_to_genre).joinedload(MovieToGenre.genre),
             joinedload(Movie.movie_to_actor).joinedload(MovieToActor.actor),
             joinedload(Movie.director),
-            joinedload(Movie.movie_rating)
-        ).offset(offset).limit(limit)
+            joinedload(Movie.movie_rating),
+        )
+        .offset(offset)
+        .limit(limit)
     )
     movies = result.unique().all()
     return [_get_movie_res(movie) for movie in movies]
@@ -66,12 +74,14 @@ async def read_movies(
 @router.get("/movie/{movie_id}", response_model=MovieRes)
 async def read_movie(movie_id: str, session: AsyncSession = Depends(get_session)):
     result = await session.exec(
-        select(Movie).options(
+        select(Movie)
+        .options(
             joinedload(Movie.movie_to_genre).joinedload(MovieToGenre.genre),
             joinedload(Movie.movie_to_actor).joinedload(MovieToActor.actor),
             joinedload(Movie.director),
-            joinedload(Movie.movie_rating)
-        ).where(Movie.id == int(movie_id))
+            joinedload(Movie.movie_rating),
+        )
+        .where(Movie.id == int(movie_id))
     )
     movie = result.first()
     if not movie or not movie.id:
@@ -86,12 +96,15 @@ async def read_movie(movie_id: str, session: AsyncSession = Depends(get_session)
 async def update_movie_director(
     movie_id: str,
     movieReq: MovieUpdateDirectorReq,
-    session: AsyncSession = Depends(get_session)
+    session: AsyncSession = Depends(get_session),
 ):
     await session.exec(
-        update(Movie).where(Movie.movie_id == movie_id).values(director_id=f"{movieReq.director_id}")
+        update(Movie)
+        .where(Movie.movie_id == movie_id)
+        .values(director_id=f"{movieReq.director_id}")
     )
     return movie_id
+
 
 @router.put(
     "/movie/{movie_id}/actor",
@@ -100,12 +113,13 @@ async def update_movie_director(
 async def update_movie_actor(
     movie_id: str,
     movieReq: MovieUpdateActorReq,
-    session: AsyncSession = Depends(get_session)
+    session: AsyncSession = Depends(get_session),
 ):
     await session.exec(
         insert(MovieToActor).values(movie_id=movie_id, actor_id=movieReq.actor_id)
     )
     return movie_id
+
 
 @router.put(
     "/movie/{movie_id}/genre",
@@ -114,15 +128,18 @@ async def update_movie_actor(
 async def update_movie_genre(
     movie_id: str,
     movieReq: MovieUpdateGenreReq,
-    session: AsyncSession = Depends(get_session)
+    session: AsyncSession = Depends(get_session),
 ):
     await session.exec(
         insert(MovieToGenre).values(movie_id=movie_id, genre_id=movieReq.genre_id)
     )
     return movie_id
 
+
 @router.post("/movie", response_model=Movie, status_code=status.HTTP_201_CREATED)
-async def create_movie(movieReq: MovieCreateReq, session: AsyncSession = Depends(get_session)):
+async def create_movie(
+    movieReq: MovieCreateReq, session: AsyncSession = Depends(get_session)
+):
     movie = Movie(**movieReq.model_dump(by_alias=False))
     session.add(movie)
     await session.commit()

@@ -1,13 +1,14 @@
-from pydantic import BaseModel, ConfigDict
 from typing import Optional
+
+from pydantic import BaseModel, ConfigDict
 from pydantic.alias_generators import to_camel
+
 
 class BaseSchema(BaseModel):
     model_config = ConfigDict(
-        alias_generator=to_camel,
-        populate_by_name=True,
-        from_attributes=True
+        alias_generator=to_camel, populate_by_name=True, from_attributes=True
     )
+
 
 class MovieCreateReq(BaseSchema):
     """
@@ -20,12 +21,14 @@ class MovieCreateReq(BaseSchema):
     actor_ids: Optional[list[int]] = None
     genre_ids: Optional[list[int]] = None
 
+
 class MovieUpdateDirectorReq(BaseSchema):
     """
     Data Transfer Object for updating director of a movie.
     """
 
     director_id: Optional[int] = None
+
 
 class MovieUpdateActorReq(BaseSchema):
     """
@@ -34,12 +37,14 @@ class MovieUpdateActorReq(BaseSchema):
 
     actor_id: Optional[int] = None
 
+
 class MovieUpdateGenreReq(BaseSchema):
     """
     Data Transfer Object for updating genre of a movie.
     """
 
     genre_id: Optional[int] = None
+
 
 class MovieRatingCreateReq(BaseSchema):
     """
@@ -52,6 +57,7 @@ class MovieRatingCreateReq(BaseSchema):
     direction: int
     acting: int
 
+
 class ActorCreateReq(BaseSchema):
     """
     Data Transfer Object for creating a new actor.
@@ -60,12 +66,14 @@ class ActorCreateReq(BaseSchema):
     name: str
     movie_ids: Optional[list[int]] = None
 
+
 class DirectorCreateReq(BaseSchema):
     """
     Data Transfer Object for creating a new director.
     """
 
     name: str
+
 
 class GenreCreateReq(BaseSchema):
     """
