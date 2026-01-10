@@ -4,12 +4,13 @@ import ActionsBar from '@/components/ActionsBar.vue'
 import { useInfoStore } from '@/stores/store'
 import { onMounted } from 'vue';
 import { toTitleCase } from '@/utilities'
-import { MOVIE, DEFAULT_IMAGE, ENTITIES, MOVIE_RATING, type ENTITY_TYPE, GENRE, ACTOR, DIRECTOR } from '@/constants'
+import {type ENTITY_TYPE } from '@/constants'
+import { MOVIE, DEFAULT_IMAGE, ENTITIES, MOVIE_RATING, GENRE, ACTOR, DIRECTOR, ADD_SUB_ENTITY_FIELDS } from '@/constants'
 import AddIcon from '@/components/icons/IconAdd.vue'
 
-type SUBENTITY_TYPE = ENTITY_TYPE;
+const SUBENTITIES = ENTITIES;
 
-const SUBENTITIES = [...ENTITIES] as SUBENTITY_TYPE[];
+type SUBENTITY_TYPE = ENTITY_TYPE;
 
 const ADD_SUBENTITY_DIALOG = "movie-add-subentity-dialog"
 
@@ -19,7 +20,7 @@ const props = defineProps<{
 
 const store = useInfoStore()
 
-const selectedSubentity = ref(MOVIE_RATING)
+const selectedSubentity = ref<SUBENTITY_TYPE>(MOVIE_RATING)
 
 const selectSubentity = (subentity: SUBENTITY_TYPE) => {
   selectedSubentity.value = subentity;
@@ -55,7 +56,7 @@ onMounted(async () => {
           <button
             class="movie-subentity-select-item"
             :class="selectedSubentity === subentity ? 'selected': 'unselected'"
-            v-for="subentity in SUBENTITIES"
+            v-for="subentity in SUBENTITIES.filter(e => e !== MOVIE)"
             :key="subentity"
             v-on:click="selectSubentity(subentity)"
           >
@@ -67,6 +68,10 @@ onMounted(async () => {
             <AddIcon />
           </button>
           <dialog class="movie-add-subentity-dialog">
+            <div class="movie-add-subentity-input" v-for="elem in ADD_SUB_ENTITY_FIELDS[MOVIE][selectedSubentity]">
+              {{ elem.prettyName }} {{ elem.required ? '' : ' [optional]' }}
+              <input :type="elem.type" :name="elem.name"/>
+            </div>
             <button class="submit" v-on:click="addSubEntity">Submit</button>
             <button class="close" v-on:click="closeSubEntityDialog">Close</button>
           </dialog>

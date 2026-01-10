@@ -144,3 +144,62 @@ export const ADD_ENTITY_FIELDS: Record<ENTITY_TYPE, {prettyName: string, name: s
     }
   ],
 };
+
+export const ADD_SUB_ENTITY_FIELDS: Record<ENTITY_TYPE, Record<ENTITY_TYPE, {prettyName: string, name: string, type: string, required: boolean}[]>> = {
+  movie: {
+    genre: [
+      {
+        prettyName: "Genre Id",
+        name: "genre_id",
+        type: "number",
+        required: true
+      }
+    ],
+    actor: [
+      {
+        prettyName: "Actor Id",
+        name: "actor_id",
+        type: "number",
+        required: true
+      }
+    ],
+    director: [
+      {
+        prettyName: "Director Id",
+        name: "director_id",
+        type: "number",
+        required: true
+      }
+    ],
+    rating: [],
+    movie: []
+  },
+  genre: {
+    genre: [],
+    actor: [],
+    director: [],
+    rating: [],
+    movie: []
+  },
+  actor: {
+    genre: [],
+    actor: [],
+    director: [],
+    rating: [],
+    movie: []
+  },
+  director: {
+    genre: [],
+    actor: [],
+    director: [],
+    rating: [],
+    movie: []
+  },
+  rating: {
+    genre: [],
+    actor: [],
+    director: [],
+    rating: [],
+    movie: []
+  }
+};
