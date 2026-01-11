@@ -4,17 +4,18 @@
 ```
 ROOT_FOLDER=`pwd`
 
-cd ${ROOT_FOLDER}/movie-ui
-docker build -t movie-ui .
-docker run movie-ui
+cd ${ROOT_FOLDER}/postgres
+docker build --build-arg MOVIE_POSTGRES_PASSWORD=${MOVIE_POSTGRES_PASSWORD} -t movie-postgres .
+docker run -it -d movie-postgres --name movie-postgres
+docker exec -it movie-postgres "psql -U movie -W -d movie -a -f ${ROOT_FOLDER}/movie-api/src/db/migrations/2026-01-03"
 
 cd ${ROOT_FOLDER}/movie-api
 docker build -t movie-api .
 docker run movie-api
 
-cd ${ROOT_FOLDER}/postgres
-docker build --build-arg MOVIE_POSTGRES_PASSWORD=${MOVIE_POSTGRES_PASSWORD} -t movie-postgres .
-docker run movie-postgres
+cd ${ROOT_FOLDER}/movie-ui
+docker build -t movie-ui .
+docker run movie-ui
 ```
 
 
