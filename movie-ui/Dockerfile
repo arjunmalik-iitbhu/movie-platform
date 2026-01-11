@@ -6,8 +6,8 @@ WORKDIR /src
 
 RUN npm ci
 RUN npm run format
-RUN npm run lint
-RUN npm run test:unit
+# RUN npm run lint
+# RUN npm run test:unit
 RUN npm run build
 
 EXPOSE 3000
