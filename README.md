@@ -3,6 +3,8 @@
 ## Setup
 ```
 ROOT_FOLDER=`pwd`
+MOVIE_POSTGRES_PASSWORD=[MY_PASSWORD]
+cd ${ROOT_FOLDER}/movie-api && sed -i "/s/POSTGRES_PASSWORD=\"\"/POSTGRES_PASSWORD=\"${MOVIE_POSTGRES_PASSWORD}\"/g" .env
 
 cd ${ROOT_FOLDER}/postgres
 docker build --build-arg MOVIE_POSTGRES_PASSWORD=${MOVIE_POSTGRES_PASSWORD} -t movie-postgres .
