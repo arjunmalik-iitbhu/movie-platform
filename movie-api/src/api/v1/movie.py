@@ -2,7 +2,7 @@ from typing import Optional
 
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import joinedload
-from sqlmodel import insert, select, update, col
+from sqlmodel import col, insert, select, update
 from sqlmodel.ext.asyncio.session import AsyncSession
 from src.deps import get_session
 from src.dto import (
@@ -16,7 +16,7 @@ from src.dto import (
     MovieUpdateDirectorReq,
     MovieUpdateGenreReq,
 )
-from src.model.entity import Movie, MovieToActor, MovieToGenre, Genre, Actor, Director
+from src.model.entity import Actor, Director, Genre, Movie, MovieToActor, MovieToGenre
 
 router = APIRouter(
     tags=["movies"],
@@ -70,11 +70,7 @@ async def read_movies(
         query = query.where(col(Actor.name).ilike(f"%{actor}%"))
     if director:
         query = query.where(col(Director.name).ilike(f"%{director}%"))
-    result = await session.exec(
-        query
-        .offset(offset)
-        .limit(limit)
-    )
+    result = await session.exec(query.offset(offset).limit(limit))
     movies = result.unique().all()
     return [_get_movie_res(movie) for movie in movies]
 
