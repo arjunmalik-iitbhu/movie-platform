@@ -41,6 +41,7 @@ onMounted(async () => {
                 store.data[`all${DIRECTOR}s`][id]?.name,
             )
             .map((k) => store.data[`all${MOVIE}s`][k])"
+          :key="elem?.id"
         >
           <img :src="elem?.imageSrc || DEFAULT_IMAGE" />
           <div class="details">

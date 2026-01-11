@@ -7,7 +7,7 @@ import { toTitleCase } from '@/utilities'
 import { useInfoStore } from '@/stores/store'
 
 const props = defineProps<{
-  entity: ENTITY_TYPE,
+  entity: ENTITY_TYPE
   filterEntities: ENTITY_TYPE[]
 }>()
 

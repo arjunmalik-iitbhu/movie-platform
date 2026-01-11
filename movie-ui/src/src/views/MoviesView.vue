@@ -17,7 +17,11 @@ onMounted(async () => {
   <main class="movies">
     <ActionsBar class="movie-actions" entity="movie" />
     <h1 class="movie-title">Movies</h1>
-    <Filter entity="movie" :filterEntities="[ENTITIES[0], ENTITIES[1], ENTITIES[2], ENTITIES[3]]" class="movie-filter" />
+    <Filter
+      entity="movie"
+      :filterEntities="[ENTITIES[0], ENTITIES[1], ENTITIES[2], ENTITIES[3]]"
+      class="movie-filter"
+    />
     <div class="movie-items">
       <div v-for="movie in store.data.movies" v-bind:key="movie.id">
         <Item

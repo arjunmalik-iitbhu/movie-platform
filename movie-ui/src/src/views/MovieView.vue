@@ -4,7 +4,7 @@ import ActionsBar from '@/components/ActionsBar.vue'
 import { useInfoStore } from '@/stores/store'
 import { onMounted } from 'vue'
 import { toTitleCase } from '@/utilities'
-import type { ENTITY_TYPE, Movie, MovieRating } from '@/constants'
+import type { ENTITY_TYPE, MovieRating } from '@/constants'
 import {
   MOVIE,
   DEFAULT_IMAGE,
@@ -105,6 +105,7 @@ onMounted(async () => {
             <div
               class="movie-add-subentity-input"
               v-for="elem in ADD_SUB_ENTITY_FIELDS[MOVIE][selectedSubentity]"
+              :key="elem.name"
             >
               <p>{{ elem.prettyName }} {{ elem.required ? '' : ' [optional]' }}</p>
               <input
@@ -122,7 +123,11 @@ onMounted(async () => {
       </div>
       <div class="movie-subentity-items">
         <template v-if="selectedSubentity === GENRE">
-          <div class="movie-subentity-item" v-for="elem in store.data[`all${MOVIE}s`][id]?.genres">
+          <div
+            class="movie-subentity-item"
+            v-for="elem in store.data[`all${MOVIE}s`][id]?.genres"
+            :key="elem?.id"
+          >
             <img :src="elem.imageSrc || DEFAULT_IMAGE" />
             <div class="details">
               <h2>{{ elem.name }}</h2>
@@ -131,7 +136,11 @@ onMounted(async () => {
           </div>
         </template>
         <template v-if="selectedSubentity === ACTOR">
-          <div class="movie-subentity-item" v-for="elem in store.data[`all${MOVIE}s`][id]?.actors">
+          <div
+            class="movie-subentity-item"
+            v-for="elem in store.data[`all${MOVIE}s`][id]?.actors"
+            :key="elem.id"
+          >
             <img :src="elem.imageSrc || DEFAULT_IMAGE" />
             <div class="details">
               <h2>{{ elem.name }}</h2>
@@ -151,7 +160,11 @@ onMounted(async () => {
           </div>
         </template>
         <template v-if="selectedSubentity === MOVIE_RATING">
-          <div class="movie-subentity-item" v-for="elem in store.data[`all${MOVIE}s`][id]?.ratings">
+          <div
+            class="movie-subentity-item"
+            v-for="elem in store.data[`all${MOVIE}s`][id]?.ratings"
+            :key="elem.id"
+          >
             <img :src="DEFAULT_IMAGE" />
             <div class="details">
               <h2>
