@@ -4,7 +4,7 @@ import ActionsBar from '@/components/ActionsBar.vue'
 import Filter from '@/components/SearchFilter.vue'
 import Item from '@/components/EntityItem.vue'
 import { useInfoStore } from '@/stores/store'
-import { GENRE, DEFAULT_IMAGE } from '@/constants'
+import { GENRE, DEFAULT_IMAGE, ENTITIES } from '@/constants'
 
 const store = useInfoStore()
 
@@ -17,7 +17,7 @@ onMounted(async () => {
   <main class="genres">
     <ActionsBar class="genre-actions" entity="genre" />
     <h1 class="genre-title">Genres</h1>
-    <Filter entity="genre" class="genre-filter" />
+    <Filter entity="genre" :filterEntities="[ENTITIES[1]]" class="genre-filter" />
     <div class="genre-items">
       <div v-for="genre in store.data.genres" v-bind:key="genre.id">
         <Item

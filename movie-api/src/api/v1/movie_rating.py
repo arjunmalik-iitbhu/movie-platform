@@ -18,10 +18,6 @@ router = APIRouter(
 async def read_ratings(
     offset: int = 0,
     limit: int = 10,
-    movie: Optional[str] = None,
-    rating: Optional[str] = None,
-    actor: Optional[str] = None,
-    director: Optional[str] = None,
     session: AsyncSession = Depends(get_session),
 ):
     result = await session.exec(select(MovieRating).offset(offset).limit(limit))

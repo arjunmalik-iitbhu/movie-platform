@@ -4,7 +4,7 @@ import ActionsBar from '@/components/ActionsBar.vue'
 import Filter from '@/components/SearchFilter.vue'
 import Item from '@/components/EntityItem.vue'
 import { useInfoStore } from '@/stores/store'
-import { ACTOR, DEFAULT_IMAGE } from '@/constants'
+import { ACTOR, DEFAULT_IMAGE, ENTITIES } from '@/constants'
 
 const store = useInfoStore()
 
@@ -17,7 +17,7 @@ onMounted(async () => {
   <main class="actors">
     <ActionsBar class="actor-actions" entity="actor" />
     <h1 class="actor-title">Actors</h1>
-    <Filter entity="actor" class="actor-filter" />
+    <Filter entity="actor" :filterEntities="[ENTITIES[2]]" class="actor-filter" />
     <div class="actor-items">
       <div v-for="actor in store.data.actors" v-bind:key="actor.id">
         <Item

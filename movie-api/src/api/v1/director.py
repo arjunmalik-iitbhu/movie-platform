@@ -1,7 +1,7 @@
 from typing import Optional
 
 from fastapi import APIRouter, Depends, HTTPException, status
-from sqlmodel import select
+from sqlmodel import select, col
 from sqlmodel.ext.asyncio.session import AsyncSession
 from src.deps import get_session
 from src.dto import DirectorCreateReq, DirectorRes
@@ -18,13 +18,13 @@ router = APIRouter(
 async def read_directors(
     offset: int = 0,
     limit: int = 10,
-    movie: Optional[str] = None,
-    genre: Optional[str] = None,
-    actor: Optional[str] = None,
     director: Optional[str] = None,
     session: AsyncSession = Depends(get_session),
 ):
-    result = await session.exec(select(Director).offset(offset).limit(limit))
+    query = select(Director)
+    if director:
+        query = query.where(col(Director.name).ilike(f"%{director}%"))
+    result = await session.exec(query.offset(offset).limit(limit))
     directors = result.all()
     return [DirectorRes(**director.model_dump()) for director in directors]
 

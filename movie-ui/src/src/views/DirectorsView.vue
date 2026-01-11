@@ -4,7 +4,7 @@ import ActionsBar from '@/components/ActionsBar.vue'
 import Filter from '@/components/SearchFilter.vue'
 import Item from '@/components/EntityItem.vue'
 import { useInfoStore } from '@/stores/store'
-import { DIRECTOR, DEFAULT_IMAGE } from '@/constants'
+import { DIRECTOR, DEFAULT_IMAGE, ENTITIES } from '@/constants'
 
 const store = useInfoStore()
 
@@ -17,7 +17,7 @@ onMounted(async () => {
   <main class="directors">
     <ActionsBar class="director-actions" entity="director" />
     <h1 class="director-title">Directors</h1>
-    <Filter entity="director" class="director-filter" />
+    <Filter entity="director" :filterEntities="[ENTITIES[3]]" class="director-filter" />
     <div class="director-items">
       <div v-for="director in store.data.directors" v-bind:key="director.id">
         <Item

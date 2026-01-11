@@ -6,13 +6,14 @@ import type { ENTITY_TYPE } from '@/constants'
 import { toTitleCase } from '@/utilities'
 import { useInfoStore } from '@/stores/store'
 
-const filterType = ref<ENTITY_TYPE>(ENTITIES[0])
+const props = defineProps<{
+  entity: ENTITY_TYPE,
+  filterEntities: ENTITY_TYPE[]
+}>()
+
+const filterType = ref<ENTITY_TYPE>(props.entity)
 const filterValue = ref<string>('')
 const store = useInfoStore()
-
-defineProps<{
-  entity: ENTITY_TYPE
-}>()
 
 const filteredEntities = computed(() =>
   ENTITIES.filter((e) => e === filterType.value && filterValue.value),
@@ -23,7 +24,7 @@ const filteredEntities = computed(() =>
   <div class="filter">
     <div class="search">
       <select name="entities" v-model="filterType">
-        <option v-for="entity in ENTITIES" :value="entity" :key="entity">
+        <option v-for="entity in props.filterEntities" :value="entity" :key="entity">
           {{ toTitleCase(entity) }}
         </option>
       </select>
