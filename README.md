@@ -11,11 +11,11 @@ docker exec -it movie-postgres "psql -U movie -W -d movie -a -f ${ROOT_FOLDER}/m
 
 cd ${ROOT_FOLDER}/movie-api
 docker build -t movie-api .
-docker run movie-api
+docker run -it -d -p 8000:8000 movie-api --name movie-api
 
 cd ${ROOT_FOLDER}/movie-ui
 docker build -t movie-ui .
-docker run movie-ui
+docker run -it -d movie-ui --name movie-ui
 ```
 
 
