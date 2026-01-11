@@ -2,7 +2,7 @@ from typing import Optional
 
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import joinedload
-from sqlmodel import insert, select, update
+from sqlmodel import insert, select, update, col
 from sqlmodel.ext.asyncio.session import AsyncSession
 from src.deps import get_session
 from src.dto import (
@@ -16,7 +16,7 @@ from src.dto import (
     MovieUpdateDirectorReq,
     MovieUpdateGenreReq,
 )
-from src.model.entity import Movie, MovieToActor, MovieToGenre
+from src.model.entity import Movie, MovieToActor, MovieToGenre, Genre, Actor, Director
 
 router = APIRouter(
     tags=["movies"],
@@ -56,14 +56,22 @@ async def read_movies(
     director: Optional[str] = None,
     session: AsyncSession = Depends(get_session),
 ):
+    query = select(Movie).options(
+        joinedload(Movie.movie_to_genre).joinedload(MovieToGenre.genre),
+        joinedload(Movie.movie_to_actor).joinedload(MovieToActor.actor),
+        joinedload(Movie.director),
+        joinedload(Movie.movie_rating),
+    )
+    if movie:
+        query = query.where(col(Movie.title).ilike(f"%{movie}%"))
+    if genre:
+        query = query.where(col(Genre.name).ilike(f"%{genre}%"))
+    if actor:
+        query = query.where(col(Actor.name).ilike(f"%{actor}%"))
+    if director:
+        query = query.where(col(Director.name).ilike(f"%{director}%"))
     result = await session.exec(
-        select(Movie)
-        .options(
-            joinedload(Movie.movie_to_genre).joinedload(MovieToGenre.genre),
-            joinedload(Movie.movie_to_actor).joinedload(MovieToActor.actor),
-            joinedload(Movie.director),
-            joinedload(Movie.movie_rating),
-        )
+        query
         .offset(offset)
         .limit(limit)
     )
